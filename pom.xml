@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+//**************************** Copyright © Jonathon Bell. All rights reserved.
+//*
+//*
+//*  Version : $Header:$
+//*
+//*
+//*  Purpose : 
+//*
+//*
+//*  Comments: This file uses a tab size of 2 spaces.
+//*                                                                     0-0
+//*                                                                   (| v |)
+//**********************************************************************w*w***-->
+<project xmlns=             "http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi=         "http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.wolery</groupId>
+    <artifactId>pom</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../pom/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>utl</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>Utl</name>
+  <description></description>
+  <url>https://github.com/wolery/utl</url>
+  <inceptionYear>January 2018</inceptionYear>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_2.12</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.scalactic</groupId>
+      <artifactId>scalactic_2.12</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.scalacheck</groupId>
+      <artifactId>scalacheck_2.12</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest-maven-plugin</artifactId>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
