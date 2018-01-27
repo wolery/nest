@@ -4,7 +4,7 @@
 //*  Version : $Header:$
 //*
 //*
-//*  Purpose : Unit tests for the owl package object.
+//*  Purpose : Unit tests for the wolery package object.
 //*
 //*
 //*  Comments: This file uses a tab size of 2 spaces.
@@ -16,7 +16,7 @@ package com.wolery
 
 //****************************************************************************
 
-class WoleryTest extends TestSuite
+class WoleryTest extends WolerySuite
 {
   test("BoolSyntax")
   {

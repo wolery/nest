@@ -23,7 +23,7 @@ import org.scalatest.prop.PropertyChecks
  *
  * @author Jonathon Bell
  */
-trait TestSuite extends FunSuite with PropertyChecks
+trait WolerySuite extends FunSuite with PropertyChecks
 {
   /**
    * Asserts that the given value is false, and throws an exception if not.
