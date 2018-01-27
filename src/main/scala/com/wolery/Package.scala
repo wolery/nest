@@ -4,7 +4,7 @@
 //*  Version : $Header:$
 //*
 //*
-//*  Purpose : Common definitions used throughout Owl.
+//*  Purpose : Common definitions used throughout the wolery.
 //*
 //*
 //*  Comments: This file uses a tab size of 2 spaces.
@@ -15,7 +15,7 @@
 package com
 
 /**
- * Common definitions used throughout the Wolery.
+ * Common definitions used throughout the wolery.
  *
  * @author Jonathon Bell
  */

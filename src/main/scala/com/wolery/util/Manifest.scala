@@ -4,7 +4,7 @@
 //*  Version : $Header:$
 //*
 //*
-//*  Purpose : Miscellaneous utility functions for working with a manifest.
+//*  Purpose : Miscellaneous utility functions for reading the manifest.
 //*
 //*
 //*  Comments: This file uses a tab size of 2 spaces.
@@ -18,7 +18,7 @@ package util
 import java.util.jar.Manifest
 
 /**
- * Miscellaneous utility functions for working with a manifest.
+ * Miscellaneous utility functions for reading the manifest.
  *
  * @author Jonathon Bell
  */
@@ -26,7 +26,7 @@ trait manifest
 {
   /**
    * Returns the main attributes of the parent executable manifest as a map of
-   * string pairs.
+   * key-value string pairs.
    */
   def attributes: Map[String,String] =
   {

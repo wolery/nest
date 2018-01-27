@@ -4,7 +4,7 @@
 //*  Version : $Header:$
 //*
 //*
-//*  Purpose : Miscellaneous utility functions used throughout Owl.
+//*  Purpose : Miscellaneous utility functions used throughout the wolery.
 //*
 //*
 //*  Comments: This file uses a tab size of 2 spaces.
@@ -16,7 +16,7 @@ package com.wolery
 package util
 
 /**
- * Miscellaneous utility functions used throughout Owl.
+ * Miscellaneous utility functions used throughout the wolery.
  *
  * @author Jonathon Bell
  */
@@ -351,7 +351,7 @@ trait utilities
 }
 
 /**
- * Miscellaneous utility functions used throughout Owl.
+ * Miscellaneous utility functions used throughout wolery.
  *
  * @author Jonathon Bell
  */
