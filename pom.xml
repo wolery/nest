@@ -33,27 +33,26 @@
 
   <name>Nest</name>
   <description>Wolery Core Libraries for Scala</description>
-  <url>https://github.com/wolery/utl</url>
+  <url>https://github.com/wolery/nest</url>
   <inceptionYear>January 2018</inceptionYear>
 
   <dependencies>
     <dependency>
       <groupId>org.scalatest</groupId>
-      <artifactId>scalatest_2.12</artifactId>
+      <artifactId>scalatest_${scala.binary.version}</artifactId>
     </dependency>
     <dependency>
       <groupId>org.scalactic</groupId>
-      <artifactId>scalactic_2.12</artifactId>
+      <artifactId>scalactic_${scala.binary.version}</artifactId>
     </dependency>
     <dependency>
       <groupId>org.scalacheck</groupId>
-      <artifactId>scalacheck_2.12</artifactId>
+      <artifactId>scalacheck_${scala.binary.version}</artifactId>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-
       <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>scala-maven-plugin</artifactId>
@@ -63,7 +62,6 @@
         <groupId>org.scalatest</groupId>
         <artifactId>scalatest-maven-plugin</artifactId>
       </plugin>
-
     </plugins>
   </build>
 </project>
