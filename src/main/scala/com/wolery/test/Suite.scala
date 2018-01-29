@@ -13,6 +13,7 @@
 //**********************************************************************w*w***
 
 package com.wolery
+package test
 
 import org.scalactic.{Prettifier,source}
 import org.scalatest.{Assertion,FunSuite}
@@ -23,7 +24,7 @@ import org.scalatest.prop.PropertyChecks
  *
  * @author Jonathon Bell
  */
-trait WolerySuite extends FunSuite with PropertyChecks
+trait Suite extends FunSuite with PropertyChecks
 {
   /**
    * Asserts that the given value is false, and throws an exception if not.

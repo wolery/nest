@@ -16,7 +16,7 @@ package com.wolery
 
 //****************************************************************************
 
-class WoleryTest extends WolerySuite
+class WoleryTest extends test.Suite
 {
   test("BoolSyntax")
   {

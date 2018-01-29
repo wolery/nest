@@ -21,7 +21,7 @@ import Integer.bitCount
 
 //****************************************************************************
 
-class UtiltiesTest extends WolerySuite
+class UtiltiesTest extends test.Suite
 {
   test("subscript")
   {
