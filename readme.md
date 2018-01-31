@@ -1,6 +1,6 @@
 # Nest: Wolery Core Libraries for Scala
 
-Nest is a set of core libraries that includes ... and much more!
+Nest is a set of core libraries that includes ... and much more! :-)
 
 ## Usage
 
