@@ -254,14 +254,14 @@ extends HBox with EventHandler[MouseEvent]
 
       // TODO: change the pick result by adding a copyForPick()
       val dockEnterEvent =
-          new DockEvent(this, Event.NULL_SOURCE_TARGET, DockEvent.DOCK_ENTER, event.getX(),
-              event.getY(), event.getScreenX(), event.getScreenY(), null,null);
+          new DockEvent(this, Event.NULL_SOURCE_TARGET, DockEvent.DOCK_ENTER,
+              event.getScreenX(), event.getScreenY());
       val dockOverEvent =
-          new DockEvent(this, Event.NULL_SOURCE_TARGET, DockEvent.DOCK_OVER, event.getX(),
-              event.getY(), event.getScreenX(), event.getScreenY(), null,null);
+          new DockEvent(this, Event.NULL_SOURCE_TARGET, DockEvent.DOCK_OVER,
+              event.getScreenX(), event.getScreenY());
       val dockExitEvent =
-          new DockEvent(this, Event.NULL_SOURCE_TARGET, DockEvent.DOCK_EXIT, event.getX(),
-              event.getY(), event.getScreenX(), event.getScreenY(), null,null);
+          new DockEvent(this, Event.NULL_SOURCE_TARGET, DockEvent.DOCK_EXIT,
+              event.getScreenX(), event.getScreenY());
 
       val eventTask = new EventTask() {
         @Override
@@ -292,8 +292,8 @@ extends HBox with EventHandler[MouseEvent]
       dragging = false;
 
       val dockReleasedEvent =
-          new DockEvent(this, Event.NULL_SOURCE_TARGET, DockEvent.DOCK_RELEASED, event.getX(),
-              event.getY(), event.getScreenX(), event.getScreenY(), null, this.getDockNode());
+          new DockEvent(this, Event.NULL_SOURCE_TARGET, DockEvent.DOCK_RELEASED,
+              event.getScreenX(), event.getScreenY(), Option(this.getDockNode()));
 
       val eventTask = new EventTask() {
         def run(node :Node, dragNode:Node ) ={

@@ -460,7 +460,7 @@ class DockPane extends StackPane with EventHandler[DockEvent]
 var FLAG = true
       for (dockIndicatorButton <- dockPosButtons.asScala if FLAG) {
         if (dockIndicatorButton
-            .contains(dockIndicatorButton.screenToLocal(event.getScreenX, event.getScreenY))) {
+            .contains(dockIndicatorButton.screenToLocal(event.screenX,event.screenY))) {
           dockPosDrag = dockIndicatorButton.getDockPos();
           if (dockIndicatorButton.isDockRoot()) {
             dockAreaDrag = root;
@@ -543,11 +543,11 @@ var FLAG = true
       }
     }
 
-    if (event.getEventType() == DockEvent.DOCK_RELEASED && event.getContents != null) {
-      if (dockPosDrag != null && dockIndicatorOverlay.isShowing()) {
-        val dockNode = event.getContents.asInstanceOf[DockNode];
-        System.out.println("FOUND AND DOCK");
-        dockNode.dock(this, dockPosDrag, dockAreaDrag);
+    if (event.getEventType()==DockEvent.DOCK_RELEASED && event.contents.isDefined)
+    {
+      if (dockPosDrag!=null && dockIndicatorOverlay.isShowing)
+      {
+        event.contents.get.dock(this,dockPosDrag,dockAreaDrag);
       }
     }
 
