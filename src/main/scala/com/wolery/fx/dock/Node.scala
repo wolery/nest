@@ -18,28 +18,14 @@ package dock
 
 //****************************************************************************
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.css.PseudoClass;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.Window;
+import javafx.beans.property.{ ObjectProperty, SimpleBooleanProperty, SimpleObjectProperty, SimpleStringProperty, StringProperty }
+import javafx.css.PseudoClass
+import javafx.event.EventHandler
+import javafx.geometry.Point2D
+import javafx.scene.{ Cursor, Node, Scene }
+import javafx.scene.input.MouseEvent
+import javafx.scene.layout.{ BorderPane, Priority, VBox }
+import javafx.stage.{ Screen, Stage, StageStyle };
 
 object DockNode
 {
@@ -150,7 +136,7 @@ extends VBox with EventHandler[MouseEvent]
 
   def setMaximized(maximized: Bool): Unit = maximizedProperty.set(maximized)
 
-  def setFloating(floating: Bool,translation:Point2D = null): Unit =
+  def setFloating(floating: Bool,translation: Point2D = null): Unit =
   {
     if (floating && !this.isFloating)
     {
@@ -176,15 +162,17 @@ extends VBox with EventHandler[MouseEvent]
 
       stage.initStyle(stageStyle);
 
-      // offset the new stage to cover exactly the area the dock was local to the scene
-      // this is useful for when the user presses the + sign and we have no information
-      // on where the mouse was clicked
-      var stagePosition:Point2D = null
+      // offset the new stage to cover exactly the area the dock was local to
+      // the scene
+      // this is useful for when the user presses the + sign and we have no
+      // information on where the mouse was clicked
+      var stagePosition: Point2D = null
 
-      if (this.isDecorated())
+      if (this.isDecorated)
       {
-        val owner = stage.getOwner()
-        stagePosition = floatScene.add(new Point2D(owner.getX(), owner.getY()));
+        val owner = stage.getOwner
+
+        stagePosition = floatScene.add(new Point2D(owner.getX(),owner.getY()));
       }
       else
       {
@@ -201,7 +189,7 @@ extends VBox with EventHandler[MouseEvent]
       // but also maintain the layout of contents
       // such as a tab that has no content
       borderPane = new BorderPane();
-      borderPane.getStyleClass().add("dock-node-border");
+      borderPane.getStyleClass.add("dock-node-border");
       borderPane.setCenter(this);
 
       val scene = new Scene(borderPane);
@@ -223,10 +211,10 @@ extends VBox with EventHandler[MouseEvent]
       stage.setX(stagePosition.getX() - insetsDelta.getLeft());
       stage.setY(stagePosition.getY() - insetsDelta.getTop());
 
-      stage.setMinWidth(borderPane.minWidth(this.getHeight()) + insetsWidth);
-      stage.setMinHeight(borderPane.minHeight(this.getWidth()) + insetsHeight);
+      stage.setMinWidth (borderPane.minWidth (this.getHeight) + insetsWidth);
+      stage.setMinHeight(borderPane.minHeight(this.getWidth)  + insetsHeight);
 
-      borderPane.setPrefSize(this.getWidth() + insetsWidth, this.getHeight() + insetsHeight);
+      borderPane.setPrefSize(this.getWidth + insetsWidth,this.getHeight + insetsHeight);
 
       stage.setScene(scene);
 
@@ -240,7 +228,7 @@ extends VBox with EventHandler[MouseEvent]
       if (this.isStageResizable())
       {
         stage.addEventFilter(MouseEvent.MOUSE_PRESSED, this);
-        stage.addEventFilter(MouseEvent.MOUSE_MOVED, this);
+        stage.addEventFilter(MouseEvent.MOUSE_MOVED,   this);
         stage.addEventFilter(MouseEvent.MOUSE_DRAGGED, this);
       }
 
@@ -252,14 +240,12 @@ extends VBox with EventHandler[MouseEvent]
       stage.show();
     }
     else
-    if (!floating && this.isFloating())
+    if (!floating && this.isFloating)
     {
       this.floatingProperty.set(floating);
-
       stage.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
       stage.removeEventFilter(MouseEvent.MOUSE_MOVED, this);
       stage.removeEventFilter(MouseEvent.MOUSE_DRAGGED, this);
-
       stage.close();
     }
   }
