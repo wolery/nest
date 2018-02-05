@@ -327,7 +327,7 @@ extends VBox with EventHandler[MouseEvent]
   def dock(dockPane: DockPane,dockPos: DockPos) =
   {
     dockImpl(dockPane);
-    dockPane.dock(this, dockPos);
+    dockPane.dock(this,dockPos);
   }
 
  private def dockImpl(dockPane: DockPane) =

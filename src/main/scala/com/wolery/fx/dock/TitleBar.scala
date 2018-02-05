@@ -53,14 +53,6 @@ extends HBox with EventHandler[MouseEvent]
   closeButton.getStyleClass.add("dock-close-button")
   stateButton.getStyleClass.add("dock-state-button")
 
-  def onStateButton(e: Event): Unit =
-  {
-    if (dockNode.isFloating)
-      dockNode.setMaximized(!dockNode.isMaximized)
-    else
-      dockNode.setFloating(true)
-  }
-
   {
   // create a pane that will stretch to make the buttons right aligned
     val p = new Pane();
@@ -72,6 +64,14 @@ extends HBox with EventHandler[MouseEvent]
   addEventHandler(MouseEvent.DRAG_DETECTED, this)
   addEventHandler(MouseEvent.MOUSE_DRAGGED, this)
   addEventHandler(MouseEvent.MOUSE_RELEASED,this)
+
+  def onStateButton(e: Event): Unit =
+  {
+    if (dockNode.isFloating)
+      dockNode.setMaximized(!dockNode.isMaximized)
+    else
+      dockNode.setFloating(true)
+  }
 
   def handle(e: MouseEvent): Unit = e.getEventType match
   {
