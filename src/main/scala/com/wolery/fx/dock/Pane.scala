@@ -81,8 +81,8 @@ class DockPane extends StackPane with EventHandler[DockEvent]
   val dockBottomRoot          = new DockPosButton(true, DockPos.BOTTOM)
 
   this.addEventHandler(DockEvent.ANY,this)
-  this.addEventFilter (DockEvent.DOCK_ENTER,(_:DockEvent) => receivedEnter = true)
-  this.addEventFilter (DockEvent.DOCK_OVER ,(_:DockEvent) => dockNodeDrag = null)
+  this.addEventFilter(DockEvent.DOCK_ENTER,(_: DockEvent) ⇒ receivedEnter = true)
+  this.addEventFilter(DockEvent.DOCK_OVER, (_: DockEvent) ⇒ dockNodeDrag = null)
 
   dockIndicatorPopup.setAutoFix(false)
   dockIndicatorOverlay.setAutoFix(false)
@@ -111,7 +111,7 @@ class DockPane extends StackPane with EventHandler[DockEvent]
   StackPane.setAlignment(dockTopRoot,   Pos.TOP_CENTER)
   StackPane.setAlignment(dockRightRoot, Pos.CENTER_RIGHT)
   StackPane.setAlignment(dockBottomRoot,Pos.BOTTOM_CENTER)
-  StackPane.setAlignment(dockLeftRoot, Pos.CENTER_LEFT)
+  StackPane.setAlignment(dockLeftRoot,  Pos.CENTER_LEFT)
 
   dockPosIndicator.add(dockTop,   1,0)
   dockPosIndicator.add(dockRight, 2,1)
