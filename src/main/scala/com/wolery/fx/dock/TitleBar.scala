@@ -16,11 +16,8 @@ package com.wolery
 package fx
 package dock
 
-//****************************************************************************
-
-import scala.collection.mutable.{Map,Stack}
-
 import scala.collection.JavaConverters.asScalaBufferConverter
+import scala.collection.mutable.{ Map, Stack }
 
 import javafx.collections.ObservableList
 import javafx.event.{ Event, EventHandler, EventType }
@@ -37,27 +34,32 @@ class DockTitleBar
 )
 extends HBox with EventHandler[MouseEvent]
 {
-  private val label      : Label  = new Label("Dock Title Bar")
-  private val closeButton: Button = new Button()
-  private val stateButton: Button = new Button()
-  private var isDragging:  Bool = false;
-
-  private val dragNodes = Map[Window,Node]();
-  private var dragStart: Point2D = null;
+  private val label      : Label            = new Label("Dock Title FRED")
+  private val closeButton: Button           = new Button()
+  private val stateButton: Button           = new Button()
+  private var isDragging : Bool             = false
+  private val dragNodes  : Map[Window,Node] = Map()
+  private var dragStart  : Point2D          = null
 
   label.textProperty.bind(dockNode.titleProperty);
   label.graphicProperty.bind(dockNode.graphicProperty);
 
-  stateButton.setOnAction(e ⇒
+  stateButton.setOnAction(onStateButton(_))
+  closeButton.setOnAction(e ⇒ dockNode.close())
+  closeButton.visibleProperty.bind(dockNode.closableProperty)
+
+  this.       getStyleClass.add("dock-title-bar")
+  label.      getStyleClass.add("dock-title-label")
+  closeButton.getStyleClass.add("dock-close-button")
+  stateButton.getStyleClass.add("dock-state-button")
+
+  def onStateButton(e: Event): Unit =
   {
     if (dockNode.isFloating)
       dockNode.setMaximized(!dockNode.isMaximized)
     else
       dockNode.setFloating(true)
-  })
-
-  closeButton.setOnAction(e ⇒ dockNode.close())
-  closeButton.visibleProperty.bind(dockNode.closableProperty)
+  }
 
   {
   // create a pane that will stretch to make the buttons right aligned
@@ -70,28 +72,6 @@ extends HBox with EventHandler[MouseEvent]
   addEventHandler(MouseEvent.DRAG_DETECTED, this)
   addEventHandler(MouseEvent.MOUSE_DRAGGED, this)
   addEventHandler(MouseEvent.MOUSE_RELEASED,this)
-//addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed(_))
-//addEventHandler(MouseEvent.DRAG_DETECTED, onDragDetected(_))
-//addEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseDragged(_))
-//addEventHandler(MouseEvent.MOUSE_RELEASED,onMouseReleased(_))
-
-  this.       getStyleClass.add("dock-title-bar")
-  label.      getStyleClass.add("dock-title-label")
-  closeButton.getStyleClass.add("dock-close-button")
-  stateButton.getStyleClass.add("dock-state-button")
- //private def isDragging()    : Bool     = isDragging
-  private def getLabel()      : Label    = label
-  private def getCloseButton(): Button   = closeButton
-  private def getStateButton(): Button   = stateButton
-  private def getDockNode()   : DockNode = dockNode
-
-  private
-  trait EventTask
-  {
-    var isReady: Bool = true;
-    def run(node: Node,dragNode: Node): Unit
-    def reset()        : Unit = {isReady = true}
-  }
 
   def handle(e: MouseEvent): Unit = e.getEventType match
   {
@@ -101,22 +81,24 @@ extends HBox with EventHandler[MouseEvent]
     case MouseEvent.MOUSE_RELEASED ⇒ onMouseReleased(e)
   }
 
-  def onMousePressed(event: MouseEvent): Unit =
+  private
+  def onMousePressed(e: MouseEvent): Unit =
   {
-    if (dockNode.isFloating && event.getClickCount==2 && event.getButton==MouseButton.PRIMARY)
+    if (dockNode.isFloating && e.getClickCount==2 && e.getButton==MouseButton.PRIMARY)
     {
-      dockNode.setMaximized(!dockNode.isMaximized);
+      dockNode.setMaximized(!dockNode.isMaximized)
     }
     else
     {
     // drag detected is used in place of mouse pressed so there is some
     // threshold for the dragging which is determined by the default drag
     // detection threshold
-      dragStart = new Point2D(event.getX,event.getY);
+      dragStart = new Point2D(e.getX,e.getY)
     }
   }
 
-  def onDragDetected(event: MouseEvent): Unit =
+  private
+  def onDragDetected(e: MouseEvent): Unit =
   {
     if (!dockNode.isFloating)
     {
@@ -128,33 +110,20 @@ extends HBox with EventHandler[MouseEvent]
 
       if (!dockNode.isCustomTitleBar && dockNode.isDecorated)
       {
-        dockNode.setFloating(true,new Point2D(0,DockTitleBar.this.getHeight));
+        dockNode.setFloating(true,new Point2D(0,getHeight))
       }
       else
       {
-        dockNode.setFloating(true);
+        dockNode.setFloating(true)
       }
 
-      // TODO: Find a better solution.
-      // Temporary work around for nodes losing the drag event when removed from
-      // the scene graph.
-      // A possible alternative is to use "ghost" panes in the DockPane layout
-      // while making DockNode simply an overlay stage that is always shown.
-      // However since flickering when popping out was already eliminated that would
-      // be overkill and is not a suitable solution for native decorations.
-      // Bug report open: https://bugs.openjdk.java.net/browse/JDK-8133335
-      val dockPane = this.getDockNode().getDockPane();
-      if (dockPane != null)
-      {
-        dockPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, this);
-        dockPane.addEventFilter(MouseEvent.MOUSE_RELEASED,this);
-      }
+      enableFilters(true)
     }
     else
-    if (dockNode.isMaximized())
+    if (dockNode.isMaximized)
     {
-      val ratioX = event.getX / this.getDockNode.getWidth();
-      val ratioY = event.getY / this.getDockNode.getHeight();
+      val ratioX = e.getX / dockNode.getWidth
+      val ratioY = e.getY / dockNode.getHeight
 
       // Please note that setMaximized is ruined by width and height changes occurring on the
       // stage and there is currently a bug report filed for this though I did not give them an
@@ -165,107 +134,91 @@ extends HBox with EventHandler[MouseEvent]
       // https://bugs.openjdk.java.net/browse/JDK-8133334
 
       // restore/minimize the window after we have obtained its dimensions
-      dockNode.setMaximized(false);
+      dockNode.setMaximized(false)
 
       // scale the drag start location by our restored dimensions
       dragStart = new Point2D(ratioX * dockNode.getWidth,
-                              ratioY * dockNode.getHeight);
+                              ratioY * dockNode.getHeight)
     }
 
-    isDragging = true;
-
-    event.consume();
+    isDragging = true
+    e.consume();
   }
 
-  def onMouseDragged(event: MouseEvent): Unit =
+  private
+  def onMouseDragged(e: MouseEvent): Unit =
   {
     if (dockNode.isFloating
-     && event.getClickCount == 2
-     && event.getButton == MouseButton.PRIMARY)
+     && e.getClickCount == 2
+     && e.getButton == MouseButton.PRIMARY)
     {
-      event.setDragDetect(false);
-      event.consume();
+      e.setDragDetect(false);
+      e.consume();
     }
     else
     if (isDragging)
     {
       val stage       = dockNode.getStage;
-      val insetsDelta = this.getDockNode.getBorderPane.getInsets;
+      val insetsDelta = dockNode.getBorderPane.getInsets;
 
       // dragging this way makes the interface more responsive in the event
       // the system is lagging as is the case with most current JavaFX
       // implementations on Linux
-      stage.setX(event.getScreenX - dragStart.getX - insetsDelta.getLeft);
-      stage.setY(event.getScreenY - dragStart.getY - insetsDelta.getTop);
+      stage.setX(e.getScreenX - dragStart.getX - insetsDelta.getLeft);
+      stage.setY(e.getScreenY - dragStart.getY - insetsDelta.getTop);
 
-      val dockEnterEvent = dockEvent(DockEvent.DOCK_ENTER,event)
-      val dockOverEvent  = dockEvent(DockEvent.DOCK_OVER, event)
-      val dockExitEvent =  dockEvent(DockEvent.DOCK_EXIT, event)
+      val dockEnterEvent = dockEvent(DockEvent.DOCK_ENTER,e)
+      val dockOverEvent  = dockEvent(DockEvent.DOCK_OVER, e)
+      val dockExitEvent =  dockEvent(DockEvent.DOCK_EXIT, e)
 
-      val eventTask = new EventTask()
+      def fire(node: Node,dragNode: Node): Unit =
       {
-        def run(node:Node,dragNode: Node): Unit =
+        if (dragNode != node)
         {
-          isReady = false
+          Event.fireEvent(node,dockEnterEvent.copyFor(DockTitleBar.this, node));
 
-          if (dragNode != node)
+          if (dragNode != null)
           {
-            Event.fireEvent(node,dockEnterEvent.copyFor(DockTitleBar.this, node));
-
-            if (dragNode != null)
-            {
-              // fire the dock exit first so listeners
-              // can actually keep track of the node we
-              // are currently over and know when we
-              // aren't over any which DOCK_OVER
-              // does not provide
-              Event.fireEvent(dragNode,dockExitEvent.copyFor(DockTitleBar.this,dragNode))
-            }
-
-            dragNodes(node.getScene.getWindow) = node
+            // fire the dock exit first so listeners
+            // can actually keep track of the node we
+            // are currently over and know when we
+            // aren't over any which DOCK_OVER
+            // does not provide
+            Event.fireEvent(dragNode,dockExitEvent.copyFor(DockTitleBar.this,dragNode))
           }
 
-          Event.fireEvent(node,dockOverEvent.copyFor(DockTitleBar.this,node));
+          dragNodes(node.getScene.getWindow) = node
         }
-      };
 
-      pickEventTarget(event.getScreenX,event.getScreenY,eventTask,Some(dockExitEvent))
+        Event.fireEvent(node,dockOverEvent.copyFor(DockTitleBar.this,node));
+      }
+
+      pickTarget(e,fire _,Some(dockExitEvent))
     }
   }
 
-  def onMouseReleased(event: MouseEvent): Unit =
+  private
+  def onMouseReleased(e: MouseEvent): Unit =
   {
     isDragging = false;
 
-    val dockReleasedEvent = dockEvent(DockEvent.DOCK_RELEASED,event,Option(this.getDockNode()))
+    val dockReleasedEvent = dockEvent(DockEvent.DOCK_RELEASED,e,Option(dockNode))
 
-    val eventTask = new EventTask()
+    def fire(node: Node,dragNode: Node): Unit =
     {
-      def run(node: Node,dragNode: Node): Unit =
+      if (dragNode != node)
       {
-        isReady = false
-
-        if (dragNode != node)
-        {
-          Event.fireEvent(node,dockReleasedEvent.copyFor(DockTitleBar.this,node))
-        }
-
         Event.fireEvent(node,dockReleasedEvent.copyFor(DockTitleBar.this,node))
       }
+
+      Event.fireEvent(node,dockReleasedEvent.copyFor(DockTitleBar.this,node))
     }
 
-    pickEventTarget(event.getScreenX,event.getScreenY,eventTask)
+    pickTarget(e,fire _)
 
     dragNodes.clear();
 
-    // Remove temporary event handler for bug mentioned above.
-    val dockPane = this.getDockNode.getDockPane
-
-    if (dockPane != null)
-    {
-      dockPane.removeEventFilter(MouseEvent.MOUSE_DRAGGED ,this);
-      dockPane.removeEventFilter(MouseEvent.MOUSE_RELEASED,this);
-    }
+    enableFilters(false)
   }
 
   private
@@ -275,16 +228,18 @@ extends HBox with EventHandler[MouseEvent]
   }
 
   private
-  def pickEventTarget(x: ℝ,y: ℝ,task: EventTask,explicit: Option[Event] = None): Unit =
+  def pickTarget(event: MouseEvent,fire: (Node,Node)=>Unit,explicit: Option[Event] = None): Unit =
   {
     def isCandidate(node: Node): Bool =
     {
-      !node.isMouseTransparent && node.contains(node.screenToLocal(x,y))
+      !node.isMouseTransparent &&
+       node.contains(node.screenToLocal(event.getScreenX,event.getScreenY))
     }
 
     for (targetStage ← stages)
     {
-      task.reset();
+      var ready = true
+      var notFired = true
 
       val stack    = Stack[Parent]();
       val dragNode = dragNodes.getOrElse(targetStage,null)
@@ -310,7 +265,7 @@ extends HBox with EventHandler[MouseEvent]
             node match
             {
               case n: Parent ⇒ stack.push(n)
-              case n         ⇒ task.run(n,dragNode)
+              case n         ⇒ ready = false;fire(n,dragNode)
             }
 
             notFired = false;
@@ -321,14 +276,44 @@ extends HBox with EventHandler[MouseEvent]
         // fire it with the parent as the target to receive the event
         if (notFired)
         {
-          task.run(parent,dragNode);
+          ready = false
+          fire(parent,dragNode);
         }
       }
 
-      if (task.isReady && explicit.isDefined && dragNode!=null)
+      if (ready && explicit.isDefined && dragNode!=null)
       {
         Event.fireEvent(dragNode,explicit.get.copyFor(this,dragNode))
         dragNodes(targetStage) = null
+      }
+    }
+  }
+
+  // TODO: Find a better solution.
+  // Temporary work around for nodes losing the drag event when removed from
+  // the scene graph.
+  // A possible alternative is to use "ghost" panes in the DockPane layout
+  // while making DockNode simply an overlay stage that is always shown.
+  // However since flickering when popping out was already eliminated that would
+  // be overkill and is not a suitable solution for native decorations.
+  // Bug report open: https://bugs.openjdk.java.net/browse/JDK-8133335
+  private
+  def enableFilters(enable: Bool):Unit =
+  {
+    val dockPane = dockNode.getDockPane
+
+    if (dockPane != null)
+    {
+      if (enable)
+      {
+        dockPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, this)
+        dockPane.addEventFilter(MouseEvent.MOUSE_RELEASED,this)
+      }
+    // Remove temporary event handler for bug mentioned above.
+      else
+      {
+        dockPane.removeEventFilter(MouseEvent.MOUSE_DRAGGED, this)
+        dockPane.removeEventFilter(MouseEvent.MOUSE_RELEASED,this)
       }
     }
   }
