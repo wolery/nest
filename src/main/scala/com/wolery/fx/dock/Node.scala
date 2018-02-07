@@ -29,78 +29,93 @@ import javafx.stage.{ Screen, Stage, StageStyle };
 
 object DockNode
 {
-  val FLOATING_PSEUDO_CLASS   = PseudoClass.getPseudoClass("floating");
   val DOCKED_PSEUDO_CLASS     = PseudoClass.getPseudoClass("docked");
+  val FLOATING_PSEUDO_CLASS   = PseudoClass.getPseudoClass("floating");
   val MAXIMIZED_PSEUDO_CLASS  = PseudoClass.getPseudoClass("maximized");
 }
 
 class DockNode
 (
-var contents: Node,
-title   : String = null,
-graphic : Node  = null
+  var contents: Node,
+  title       : String = "Dock",
+  graphic     : Node   = null
 )
 extends VBox with EventHandler[MouseEvent]
 {
-  val graphicProperty:ObjectProperty[Node] = new SimpleObjectProperty[Node](null,"graphic",null)
-  val titleProperty: StringProperty = new SimpleStringProperty(null,"title","Dock")
-  val closableProperty = new SimpleBooleanProperty(null,"closable",true)
-  val customTitleBarProperty = new SimpleBooleanProperty(null,"customTitleBar",true)
-  val floatableProperty = new SimpleBooleanProperty(null,"floatable",true)
-  private val maximizedProperty = new SimpleBooleanProperty(null,"maximized",false)
+  val graphicProperty           = new SimpleObjectProperty[Node](null,"graphic",graphic)
+  val titleProperty             = new SimpleStringProperty      (null,"title",title)
+  val closableProperty          = new SimpleBooleanProperty     (null,"closable",true)
+  val customTitleBarProperty    = new SimpleBooleanProperty     (null,"customTitleBar",true)
+  val floatableProperty         = new SimpleBooleanProperty     (null,"floatable",true)
+  val stageResizableProperty    = new SimpleBooleanProperty     (null,"resizable",true)
+
+  private
+  val maximizedProperty = new SimpleBooleanProperty(null,"maximized",false)
   {
     override
     def invalidated: Unit =
     {
-      DockNode.this.pseudoClassStateChanged(DockNode.MAXIMIZED_PSEUDO_CLASS,get);
+      pseudoClassStateChanged(DockNode.MAXIMIZED_PSEUDO_CLASS,get);
 
       if (borderPane != null)
       {
         borderPane.pseudoClassStateChanged(DockNode.MAXIMIZED_PSEUDO_CLASS,get);
       }
 
-      stage.setMaximized(get());
+      stage.setMaximized(get);
 
       // TODO: This is a work around to fill the screen bounds and not overlap the task bar when
       // the window is undecorated as in Visual Studio. A similar work around needs applied for
       // JFrame in Swing. http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4737788
       // Bug report filed:
       // https://bugs.openjdk.java.net/browse/JDK-8133330
-      if (this.get())
+      if (get)
       {
-        val screen = Screen
-            .getScreensForRectangle(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight())
+        val bounds = Screen
+            .getScreensForRectangle(stage.getX,stage.getY,stage.getWidth,stage.getHeight)
             .get(0)
-        val bounds = screen.getVisualBounds();
-        stage.setX(bounds.getMinX());
-        stage.setY(bounds.getMinY());
-        stage.setWidth(bounds.getWidth());
-        stage.setHeight(bounds.getHeight());
+            .getVisualBounds
+        stage.setX     (bounds.getMinX)
+        stage.setY     (bounds.getMinY)
+        stage.setWidth (bounds.getWidth)
+        stage.setHeight(bounds.getHeight)
       }
     }
-  };
+  }
+
+  val floatingProperty = new SimpleBooleanProperty(null,"floating",false)
+  {
+    override
+    def invalidated() =
+    {
+      pseudoClassStateChanged(DockNode.FLOATING_PSEUDO_CLASS,get)
+
+      if (borderPane != null)
+      {
+        borderPane.pseudoClassStateChanged(DockNode.FLOATING_PSEUDO_CLASS,get)
+      }
+    }
+  }
+
   val dockedProperty = new SimpleBooleanProperty(null,"docked",false)
   {
-   override
-   def invalidated(): Unit =
+    override
+    def invalidated(): Unit =
     {
-      if (get())
+      if (get && dockTitleBar != null)
       {
-        if (dockTitleBar != null)
-        {
-          dockTitleBar.setVisible(true);
-          dockTitleBar.setManaged(true);
-        }
+        dockTitleBar.setVisible(true);
+        dockTitleBar.setManaged(true);
       }
 
-      DockNode.this.pseudoClassStateChanged(DockNode.DOCKED_PSEUDO_CLASS, get());
+      pseudoClassStateChanged(DockNode.DOCKED_PSEUDO_CLASS,get);
     }
-  };
+  }
 
-  private var stageStyle = StageStyle.TRANSPARENT;
-  private var stage: Stage = null
-  private var borderPane: BorderPane = null
-  private var dockPane: DockPane = null
+  private var stageStyle             = StageStyle.TRANSPARENT;
+  private var stage  : Stage         = _
+  private var borderPane: BorderPane = _
+  private var dockPane: DockPane     = _
 
 
   var dockTitleBar = new DockTitleBar(this);
@@ -110,28 +125,36 @@ extends VBox with EventHandler[MouseEvent]
 
   this.getStyleClass().add("dock-node");
 
+  def setStageStyle(s: StageStyle): Unit =
+  {
+    stageStyle = s
+  }
 
-
-
-  def setStageStyle(s: StageStyle): Unit = stageStyle = stageStyle
   def setContents(c: Node) : Unit=
   {
     this.getChildren().set(this.getChildren().indexOf(this.contents), c);
     this.contents = c;
   }
 
-  def setDockTitleBar(dockTitleBar: DockTitleBar):Unit = {
-    if (dockTitleBar != null) {
-      if (this.dockTitleBar != null) {
-        this.getChildren().set(this.getChildren().indexOf(this.dockTitleBar), dockTitleBar);
-      } else {
-        this.getChildren().add(0, dockTitleBar);
+  def setDockTitleBar(dtb: DockTitleBar): Unit =
+  {
+    if (dtb != null)
+    {
+      if (dockTitleBar != null)
+      {
+        getChildren.set(getChildren.indexOf(dockTitleBar),dtb)
       }
-    } else {
-      this.getChildren().remove(this.dockTitleBar);
+      else
+      {
+        getChildren.add(0,dtb)
+      }
+    }
+    else
+    {
+      getChildren.remove(dockTitleBar)
     }
 
-    this.dockTitleBar = dockTitleBar;
+    dockTitleBar = dtb
   }
 
   def setMaximized(maximized: Bool): Unit = maximizedProperty.set(maximized)
@@ -148,16 +171,18 @@ extends VBox with EventHandler[MouseEvent]
       dockTitleBar.setVisible(this.isCustomTitleBar());
       dockTitleBar.setManaged(this.isCustomTitleBar());
 
-      if (this.isDocked())
+      if (isDocked)
       {
-        this.undock();
+        undock()
       }
 
       stage = new Stage();
-      stage.titleProperty().bind(titleProperty);
-      if (dockPane != null && dockPane.getScene() != null
-          && dockPane.getScene().getWindow() != null) {
-        stage.initOwner(dockPane.getScene().getWindow());
+      stage.titleProperty().bind(titleProperty)
+
+      if (dockPane!=null && dockPane.getScene != null
+       && dockPane.getScene.getWindow != null)
+      {
+        stage.initOwner(dockPane.getScene.getWindow)
       }
 
       stage.initStyle(stageStyle);
@@ -172,27 +197,27 @@ extends VBox with EventHandler[MouseEvent]
       {
         val owner = stage.getOwner
 
-        stagePosition = floatScene.add(new Point2D(owner.getX(),owner.getY()));
+        stagePosition = floatScene.add(new Point2D(owner.getX,owner.getY))
       }
       else
       {
-        stagePosition = floatScreen;
+        stagePosition = floatScreen
       }
 
       if (translation != null)
       {
-        stagePosition = stagePosition.add(translation);
+        stagePosition = stagePosition.add(translation)
       }
 
       // the border pane allows the dock node to
       // have a drop shadow effect on the border
       // but also maintain the layout of contents
       // such as a tab that has no content
-      borderPane = new BorderPane();
-      borderPane.getStyleClass.add("dock-node-border");
-      borderPane.setCenter(this);
+      borderPane = new BorderPane()
+      borderPane.getStyleClass.add("dock-node-border")
+      borderPane.setCenter(this)
 
-      val scene = new Scene(borderPane);
+      val scene = new Scene(borderPane)
 
       // apply the floating property so we can get its padding size
       // while it is floating to offset it by the drop shadow
@@ -236,87 +261,60 @@ extends VBox with EventHandler[MouseEvent]
       // without this it subtracts the native border sizes from the scene
       // size
       stage.sizeToScene();
-
       stage.show();
     }
     else
     if (!floating && this.isFloating)
     {
-      this.floatingProperty.set(floating);
+      floatingProperty.set(floating);
       stage.removeEventFilter(MouseEvent.MOUSE_PRESSED, this);
-      stage.removeEventFilter(MouseEvent.MOUSE_MOVED, this);
+      stage.removeEventFilter(MouseEvent.MOUSE_MOVED,   this);
       stage.removeEventFilter(MouseEvent.MOUSE_DRAGGED, this);
       stage.close();
     }
   }
 
-  def getDockPane() = dockPane
-  def getDockTitleBar(): DockTitleBar = this.dockTitleBar
-  def getStage() : Stage = stage
-  def getBorderPane() :BorderPane = borderPane
-  def getContents() : Node = contents
+  def getDockPane(): DockPane         = dockPane
+  def getDockTitleBar(): DockTitleBar = dockTitleBar
+  def getStage() : Stage              = stage
+  def getBorderPane() :BorderPane     = borderPane
+  def getContents() : Node            = contents
+  def getGraphic(): Node              = graphicProperty.get
+  def getTitle(): String              = titleProperty.get
+  def setTitle(title: String)         = titleProperty.setValue(title)
+  def isCustomTitleBar(): Bool        = customTitleBarProperty.get
+  def isFloating(): Bool              = floatingProperty.get
+  def isFloatable(): Bool             = floatableProperty.get
+  def isClosable(): Bool              = closableProperty.get
+  def isDocked(): Bool                = dockedProperty.get
+  def isStageResizable()              = stageResizableProperty.get
+  def isMaximized() : Bool            = maximizedProperty.get
+  def isDecorated(): Bool             = stageStyle!=StageStyle.TRANSPARENT && stageStyle!=StageStyle.UNDECORATED;
 
-  def getGraphic(): Node = graphicProperty.get();
-  def setGraphic(graphic: Node): Unit = this.graphicProperty.setValue(graphic)
+  def setStageResizable(resizable: Bool) = stageResizableProperty.set(resizable)
+  def setClosable(closable: Bool):Unit  = closableProperty.set(closable)
+  def setGraphic(graphic: Node): Unit = graphicProperty.setValue(graphic)
 
-  def getTitle():String               = titleProperty.get
-  def setTitle(title :String)        = this.titleProperty.setValue(title)
-
-
-  def isCustomTitleBar(): Bool =customTitleBarProperty.get();
   def setUseCustomTitleBar(useCustomTitleBar: Bool): Unit =
   {
-    if (this.isFloating())
+    if (this.isFloating)
     {
       dockTitleBar.setVisible(useCustomTitleBar);
       dockTitleBar.setManaged(useCustomTitleBar);
     }
-    this.customTitleBarProperty.set(useCustomTitleBar);
+
+    customTitleBarProperty.set(useCustomTitleBar);
   }
 
-  val floatingProperty = new SimpleBooleanProperty(null,"floating",false)
-  {
-    override
-    def invalidated() =
-    {
-      DockNode.this.pseudoClassStateChanged(DockNode.FLOATING_PSEUDO_CLASS, get());
-      if (borderPane != null)
-      {
-        borderPane.pseudoClassStateChanged(DockNode.FLOATING_PSEUDO_CLASS, get());
-      }
-    }
-  }
-
-  def isFloating(): Bool = floatingProperty.get
-
-
-  def isFloatable() = floatableProperty.get
-  def setFloatable(floatable: Bool) =
+  def setFloatable(floatable: Bool): Unit =
   {
     if (!floatable && this.isFloating)
     {
-      this.setFloating(false);
+      this.setFloating(false)
     }
-    this.floatableProperty.set(floatable);
+
+    floatableProperty.set(floatable)
   }
-
-  def isClosable() = closableProperty.get()
-  def setClosable(closable: Bool) = this.closableProperty.set(closable)
-
-  val stageResizableProperty = new SimpleBooleanProperty(null,"resizable",true)
-  def isStageResizable() = stageResizableProperty.get
-  def setStageResizable(resizable: Bool) = stageResizableProperty.set(resizable)
-
-
-  def isDocked() = dockedProperty.get
-
-//  public final BooleanProperty maximizedProperty() {
-//    return maximizedProperty;
-//  }
-
-  def isMaximized() : Bool = maximizedProperty.get
-
-  def isDecorated(): Bool = stageStyle != StageStyle.TRANSPARENT && stageStyle != StageStyle.UNDECORATED;
 
   def dock(dockPane: DockPane,dockPos: DockPos,sibling: Node) =
   {
@@ -340,142 +338,181 @@ extends VBox with EventHandler[MouseEvent]
     this.dockedProperty.set(true);
   }
 
-  def undock(): Unit =
+private  def undock(): Unit =
   {
-    if (dockPane != null) {
+    if (dockPane != null)
+    {
       dockPane.undock(this);
     }
-    this.dockedProperty.set(false);
+
+    dockedProperty.set(false);
   }
 
   def close() : Unit =
   {
-    if (isFloating())
+    if (isFloating)
     {
-      setFloating(false);
+      setFloating(false)
     }
     else
-    if (isDocked())
+    if (isDocked)
     {
-      undock();
+      undock()
     }
   }
 
-  /**
-   * The last position of the mouse that was within the minimum layout bounds.
-   */
-  private var sizeLast: Point2D = null
-  /**
-   * Whether we are currently resizing in a given direction.
-   */
-  private var sizeWest = false
-  private var sizeEast = false
+  private var sizeLast: Point2D = _
+  private var sizeWest  = false
+  private var sizeEast  = false
   private var sizeNorth = false
   private var sizeSouth = false;
 
-  def isMouseResizeZone() = sizeWest || sizeEast || sizeNorth || sizeSouth;
-
-  def handle(event: MouseEvent): Unit =
+  def isMouseResizeZone(): Bool =
   {
-    var cursor = Cursor.DEFAULT;
+    sizeWest || sizeEast || sizeNorth || sizeSouth;
+  }
 
-    // TODO: use escape to cancel resize/drag operation like visual studio
+  def onMousePressed(e: MouseEvent): Unit =
+  {
+    sizeLast = new Point2D(e.getScreenX,e.getScreenY)
+  }
 
-    if (!this.isFloating() || !this.isStageResizable())
+  def onMouseMoved(e: MouseEvent): Unit =
+  {
+    var cursor = Cursor.DEFAULT
+
+    val insets = borderPane.getPadding
+
+    sizeWest  = e.getX < insets.getLeft
+    sizeNorth = e.getY < insets.getTop
+    sizeEast  = e.getX > borderPane.getWidth  - insets.getRight
+    sizeSouth = e.getY > borderPane.getHeight - insets.getBottom
+
+    if (sizeWest)
     {
-      return;
-    }
-
-    if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
-    {
-      sizeLast = new Point2D(event.getScreenX(), event.getScreenY());
-    }
-    else
-    if (event.getEventType() == MouseEvent.MOUSE_MOVED)
-    {
-      val insets = borderPane.getPadding();
-
-      sizeWest = event.getX() < insets.getLeft();
-      sizeEast = event.getX() > borderPane.getWidth() - insets.getRight();
-      sizeNorth = event.getY() < insets.getTop();
-      sizeSouth = event.getY() > borderPane.getHeight() - insets.getBottom();
-
-      if (sizeWest) {
-        if (sizeNorth) {
-          cursor = Cursor.NW_RESIZE;
-        } else if (sizeSouth) {
-          cursor = Cursor.SW_RESIZE;
-        } else {
-          cursor = Cursor.W_RESIZE;
-        }
-      } else if (sizeEast) {
-        if (sizeNorth) {
-          cursor = Cursor.NE_RESIZE;
-        } else if (sizeSouth) {
-          cursor = Cursor.SE_RESIZE;
-        } else {
-          cursor = Cursor.E_RESIZE;
-        }
-      } else if (sizeNorth) {
-        cursor = Cursor.N_RESIZE;
-      } else if (sizeSouth) {
-        cursor = Cursor.S_RESIZE;
+      if (sizeNorth)
+      {
+        cursor = Cursor.NW_RESIZE;
       }
-
-      this.getScene().setCursor(cursor);
+      else
+      if (sizeSouth)
+      {
+        cursor = Cursor.SW_RESIZE;
+      }
+      else
+      {
+        cursor = Cursor.W_RESIZE;
+      }
     }
     else
-    if (event.getEventType() == MouseEvent.MOUSE_DRAGGED && this.isMouseResizeZone()) {
-      val sizeCurrent = new Point2D(event.getScreenX(), event.getScreenY());
-      val sizeDelta = sizeCurrent.subtract(sizeLast);
-
-      var newX = stage.getX()
-      var newY = stage.getY()
-      var newWidth = stage.getWidth()
-      var newHeight = stage.getHeight();
-
-      if (sizeNorth) {
-        newHeight -= sizeDelta.getY();
-        newY += sizeDelta.getY();
-      } else if (sizeSouth) {
-        newHeight += sizeDelta.getY();
+    if (sizeEast)
+    {
+      if (sizeNorth)
+      {
+        cursor = Cursor.NE_RESIZE;
       }
-
-      if (sizeWest) {
-        newWidth -= sizeDelta.getX();
-        newX += sizeDelta.getX();
-      } else if (sizeEast) {
-        newWidth += sizeDelta.getX();
+      else
+      if (sizeSouth)
+      {
+        cursor = Cursor.SE_RESIZE;
       }
-
-      // TODO: find a way to do this synchronously and eliminate the flickering of moving the stage
-      // around, also file a bug report for this feature if a work around can not be found this
-      // primarily occurs when dragging north/west but it also appears in native windows and Visual
-      // Studio, so not that big of a concern.
-      // Bug report filed:
-      // https://bugs.openjdk.java.net/browse/JDK-8133332
-      var currentX = sizeLast.getX()
-      var currentY = sizeLast.getY()
-
-      if (newWidth >= stage.getMinWidth()) {
-        stage.setX(newX);
-        stage.setWidth(newWidth);
-        currentX = sizeCurrent.getX();
+      else
+      {
+        cursor = Cursor.E_RESIZE;
       }
+    }
+    else
+    if (sizeNorth)
+    {
+      cursor = Cursor.N_RESIZE;
+    }
+    else
+    if (sizeSouth)
+    {
+      cursor = Cursor.S_RESIZE;
+    }
 
-      if (newHeight >= stage.getMinHeight()) {
-        stage.setY(newY);
-        stage.setHeight(newHeight);
-        currentY = sizeCurrent.getY();
-      }
-      sizeLast = new Point2D(currentX, currentY);
-      // we do not want the title bar getting these events
-      // while we are actively resizing
-      if (sizeNorth || sizeSouth || sizeWest || sizeEast) {
-        event.consume();
+    getScene.setCursor(cursor)
+  }
+
+  def onMouseDragged(e: MouseEvent): Unit =
+  {
+    val sizeCurrent = new Point2D(e.getScreenX,e.getScreenY)
+    val sizeDelta   = sizeCurrent.subtract(sizeLast);
+
+    var newX     = stage.getX
+    var newY     = stage.getY
+    var newWidth = stage.getWidth
+    var newHeight= stage.getHeight
+
+    if (sizeNorth)
+    {
+      newHeight -= sizeDelta.getY
+      newY      += sizeDelta.getY
+    }
+    else
+    if (sizeSouth)
+    {
+      newHeight += sizeDelta.getY
+    }
+
+    if (sizeWest)
+    {
+      newWidth -= sizeDelta.getX
+      newX     += sizeDelta.getX
+    }
+    else
+    if (sizeEast)
+    {
+      newWidth += sizeDelta.getX
+    }
+
+    // TODO: find a way to do this synchronously and eliminate the flickering of moving the stage
+    // around, also file a bug report for this feature if a work around can not be found this
+    // primarily occurs when dragging north/west but it also appears in native windows and Visual
+    // Studio, so not that big of a concern.
+    // Bug report filed:
+    // https://bugs.openjdk.java.net/browse/JDK-8133332
+
+    var currentX = sizeLast.getX
+    var currentY = sizeLast.getY
+
+    if (newWidth >= stage.getMinWidth)
+    {
+      stage.setX(newX);
+      stage.setWidth(newWidth)
+      currentX = sizeCurrent.getX
+    }
+
+    if (newHeight >= stage.getMinHeight)
+    {
+      stage.setY(newY);
+      stage.setHeight(newHeight)
+      currentY = sizeCurrent.getY
+    }
+
+    sizeLast = new Point2D(currentX,currentY)
+
+    // we do not want the title bar getting these events
+    // while we are actively resizing
+    if (isMouseResizeZone)
+    {
+      e.consume()
+    }
+  }
+
+  def handle(e: MouseEvent): Unit =
+  {
+    if (isFloating && isStageResizable)
+    {
+      e.getEventType match
+      {
+        case MouseEvent.MOUSE_PRESSED                      ⇒ onMousePressed(e)
+        case MouseEvent.MOUSE_MOVED                        ⇒ onMouseMoved(e)
+        case MouseEvent.MOUSE_DRAGGED if isMouseResizeZone ⇒ onMouseDragged(e)
       }
     }
   }
-  this.titleProperty.setValue(title);
-  this.graphicProperty.setValue(graphic);
 }
+
+//****************************************************************************
