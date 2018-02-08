@@ -29,25 +29,25 @@ import javafx.stage.{ Screen, Stage, StageStyle };
 
 object DockNode
 {
-  val DOCKED_PSEUDO_CLASS     = PseudoClass.getPseudoClass("docked");
-  val FLOATING_PSEUDO_CLASS   = PseudoClass.getPseudoClass("floating");
-  val MAXIMIZED_PSEUDO_CLASS  = PseudoClass.getPseudoClass("maximized");
+  private val DOCKED_PSEUDO_CLASS    = PseudoClass.getPseudoClass("docked");
+  private val FLOATING_PSEUDO_CLASS  = PseudoClass.getPseudoClass("floating");
+  private val MAXIMIZED_PSEUDO_CLASS = PseudoClass.getPseudoClass("maximized");
 }
 
 class DockNode
 (
-  var contents: Node,
-  title       : String = "Dock",
-  graphic     : Node   = null
+  contents  : Node,
+  title     : String = "Dock",
+  graphic   : Node   = null
 )
 extends VBox with EventHandler[MouseEvent]
 {
   val graphicProperty           = new SimpleObjectProperty[Node](null,"graphic",graphic)
   val titleProperty             = new SimpleStringProperty      (null,"title",title)
   val closableProperty          = new SimpleBooleanProperty     (null,"closable",true)
-  val customTitleBarProperty    = new SimpleBooleanProperty     (null,"customTitleBar",true)
   val floatableProperty         = new SimpleBooleanProperty     (null,"floatable",true)
   val stageResizableProperty    = new SimpleBooleanProperty     (null,"resizable",true)
+  val customTitleBarProperty    = new SimpleBooleanProperty     (null,"customTitleBar",true)
 
   private
   val maximizedProperty = new SimpleBooleanProperty(null,"maximized",false)
@@ -116,24 +116,15 @@ extends VBox with EventHandler[MouseEvent]
   private var stage  : Stage         = _
   private var borderPane: BorderPane = _
   private var dockPane: DockPane     = _
+  private var dockTitleBar           = new DockTitleBar(this);
 
-
-  var dockTitleBar = new DockTitleBar(this);
-
-  getChildren().addAll(dockTitleBar,contents);
-  VBox.setVgrow(contents,Priority.ALWAYS);
-
-  this.getStyleClass().add("dock-node");
+  getChildren.addAll(dockTitleBar,contents)
+  VBox.setVgrow(contents,Priority.ALWAYS)
+  getStyleClass.add("dock-node")
 
   def setStageStyle(s: StageStyle): Unit =
   {
     stageStyle = s
-  }
-
-  def setContents(c: Node) : Unit=
-  {
-    this.getChildren().set(this.getChildren().indexOf(this.contents), c);
-    this.contents = c;
   }
 
   def setDockTitleBar(dtb: DockTitleBar): Unit =
@@ -156,8 +147,6 @@ extends VBox with EventHandler[MouseEvent]
 
     dockTitleBar = dtb
   }
-
-  def setMaximized(maximized: Bool): Unit = maximizedProperty.set(maximized)
 
   def setFloating(floating: Bool,translation: Point2D = null): Unit =
   {
@@ -250,7 +239,7 @@ extends VBox with EventHandler[MouseEvent]
 
       stage.setResizable(this.isStageResizable())
 
-      if (this.isStageResizable())
+      if (this.isStageResizable)
       {
         stage.addEventFilter(MouseEvent.MOUSE_PRESSED, this);
         stage.addEventFilter(MouseEvent.MOUSE_MOVED,   this);
@@ -278,10 +267,8 @@ extends VBox with EventHandler[MouseEvent]
   def getDockTitleBar(): DockTitleBar = dockTitleBar
   def getStage() : Stage              = stage
   def getBorderPane() :BorderPane     = borderPane
-  def getContents() : Node            = contents
   def getGraphic(): Node              = graphicProperty.get
   def getTitle(): String              = titleProperty.get
-  def setTitle(title: String)         = titleProperty.setValue(title)
   def isCustomTitleBar(): Bool        = customTitleBarProperty.get
   def isFloating(): Bool              = floatingProperty.get
   def isFloatable(): Bool             = floatableProperty.get
@@ -291,9 +278,11 @@ extends VBox with EventHandler[MouseEvent]
   def isMaximized() : Bool            = maximizedProperty.get
   def isDecorated(): Bool             = stageStyle!=StageStyle.TRANSPARENT && stageStyle!=StageStyle.UNDECORATED;
 
+  def setTitle(title: String)            = titleProperty.setValue(title)
   def setStageResizable(resizable: Bool) = stageResizableProperty.set(resizable)
-  def setClosable(closable: Bool):Unit  = closableProperty.set(closable)
-  def setGraphic(graphic: Node): Unit = graphicProperty.setValue(graphic)
+  def setClosable(closable: Bool):Unit   = closableProperty.set(closable)
+  def setGraphic(graphic: Node): Unit    = graphicProperty.setValue(graphic)
+  def setMaximized(maximized: Bool): Unit= maximizedProperty.set(maximized)
 
   def setUseCustomTitleBar(useCustomTitleBar: Bool): Unit =
   {
@@ -338,7 +327,7 @@ extends VBox with EventHandler[MouseEvent]
     this.dockedProperty.set(true);
   }
 
-private  def undock(): Unit =
+  def undock(): Unit =
   {
     if (dockPane != null)
     {
@@ -510,6 +499,7 @@ private  def undock(): Unit =
         case MouseEvent.MOUSE_PRESSED                      ⇒ onMousePressed(e)
         case MouseEvent.MOUSE_MOVED                        ⇒ onMouseMoved(e)
         case MouseEvent.MOUSE_DRAGGED if isMouseResizeZone ⇒ onMouseDragged(e)
+        case _ ⇒
       }
     }
   }
