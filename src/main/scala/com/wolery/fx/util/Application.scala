@@ -50,7 +50,7 @@ import applications._
  *
  *    object MyApplication extends com.wolery.fx.util.Application
  *    {
- *      def start(stage: Stage): Unit
+ *      def start(stage: Stage): Unit =
  *      {
  *        stage.setScene(new Scene(new Group(new Circle(40,40,30)),400,300))
  *        stage.setTitle("My Application")
