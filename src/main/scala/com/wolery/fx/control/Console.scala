@@ -16,7 +16,7 @@
 //**********************************************************************w*w***
 
 package com.wolery
-package owl
+package fx
 package control
 
 import java.io.Writer
@@ -30,7 +30,8 @@ import javafx.event.{ActionEvent,Event,EventHandler,EventType}
 import scala.beans.BeanProperty
 import scala.collection.mutable.Buffer
 
-import util._
+import com.wolery.util.Logging
+import com.wolery.util.{beep,clamp,isIncreasing}
 
 /**
  * A command line console control implemented as a JavaFX TextArea control.
@@ -124,7 +125,7 @@ import util._
  *
  * @author Jonathon Bell
  */
-class Console extends TextArea with util.Logging
+class Console extends TextArea with Logging
 {
   private type Filters = Seq[(EventType[KeyEvent],EventHandler[KeyEvent])]
 
