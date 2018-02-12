@@ -31,7 +31,7 @@ import scala.beans.BeanProperty
 import scala.collection.mutable.Buffer
 
 import com.wolery.util.Logging
-import com.wolery.util.{beep,clamp,isIncreasing}
+import com.wolery.util.utilities.{beep,clamp,isIncreasing}
 
 /**
  * A command line console control implemented as a JavaFX TextArea control.
