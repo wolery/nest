@@ -48,7 +48,7 @@ import applications._
  *    import javafx.scene.shape.Circle
  *    import javafx.stage.Stage
  *
- *    object MyApplication extends com.wolery.fx.util.Application
+ *    object MyApplication extends com.wolery.fx.util.Application =
  *    {
  *      def start(stage: Stage): Unit =
  *      {
