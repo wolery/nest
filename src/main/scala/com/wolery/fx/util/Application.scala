@@ -120,7 +120,7 @@ trait Application extends Logging
    */
   def init(): Unit =
   {
-    log.debug("Application.init()")                      // Trace our progress
+    log.debug("init()")                                  // Trace our progress
   }
 
   /**
@@ -150,7 +150,7 @@ trait Application extends Logging
    */
   def stop(): Unit =
   {
-    log.debug("Application.stop()")                      // Trace our progress
+    log.debug("stop()")                                  // Trace our progress
   }
 
   /**
@@ -179,7 +179,7 @@ trait Application extends Logging
    */
   def stylesheet_=(url: Option[String]): Unit =
   {
-    log.debug("Application.stylesheet_=({})",url)        // Trace out progress
+    log.debug("stylesheet_=({})",url)                    // Trace out progress
 
     val u = url.getOrElse(null)                          // May be null string
 
@@ -236,7 +236,7 @@ trait Application extends Logging
    */
   def main(args: Array[String]): Unit =
   {
-    log.debug("Application.main({})",args)               // Trace our progress
+    log.debug("main({})",args)                           // Trace our progress
 
     application.launch(classOf[ApplicationProxy],args:_*)// Delegate to JavaFX
   }
