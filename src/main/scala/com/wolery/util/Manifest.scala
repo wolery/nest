@@ -42,6 +42,38 @@ trait manifest
 
     map.toMap                                            // As immutable map
   }
+
+  /**
+   * Replace the occurrences of attribute placeholders within the given string
+   * with their respective values in the manifest.
+   *
+   * An attribute placeholder is specified with the syntax `${<attribute>}` as
+   * if referring to a variable from within a Scala string interpolation.  The
+   * attribute values themselves are specified in the parent POM  and embedded
+   * within the manifest at build time.
+   *
+   * For example:
+   * {{{
+   *    manifest.format("v${Implementation-Version}")    // Get version string
+   * }}}
+   * might return something like:
+   * {{{
+   *    "v1.0.0-SNAPSHOT"
+   * }}}
+   *
+   * @param string  A template string that may contain attribute placeholders.
+   *
+   * @return  A copy of the input string in which each plaheholder is replaced
+   *          its respective value in the manifest, or the empty string if no
+   *          such attribute exists.
+   */
+  def format(string: String): String =
+  {
+    val a = attributes                                   // Get the attributes
+    val p = """\$\{([A-Za-z-]+)\}""".r                   // Match "${<ident>}"
+
+    p.replaceAllIn(string,m ⇒ a.getOrElse(m.group(1),""))// Replace with value
+  }
 }
 
 /**
