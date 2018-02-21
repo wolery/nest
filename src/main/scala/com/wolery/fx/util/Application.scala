@@ -16,10 +16,13 @@ package com.wolery
 package fx
 package util
 
-import scala.collection.JavaConverters._
 import javafx.application.{Application ⇒ application}
 import javafx.stage.Stage
+
+import scala.collection.JavaConverters._
+
 import com.wolery.util.Logging
+
 import applications._
 
 /**
