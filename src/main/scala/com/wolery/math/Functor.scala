@@ -25,18 +25,23 @@ package math
  *
  * The term originates from category theory, where it refers to a homomorphism
  * between categories. For us, the relevant category is `Scala`, whose objects
- * are types and whose morphisms the computable functions between them.
+ * are types, and morphisms the computable functions between them.
  *
  * Instances satisfy the axioms:
  * {{{
- *     map f id,,α,, = id,,F[α],,                        preserve identities
- *     map (f ∘ g) = (map f) ∘ (map g)                   preserve compositions
+ *     map(Fa)(id,,α,,) = Fa                             preserve identities
+ *       map(Fa)(f ∘ g) = map(map(Fa)(g))(f)             preserve compositions
  * }}}
- * for all types `α` and composable functions `f` and `g`, where `id,,α,,`
- * denotes the identity function at type `α`.
+ * or, equivalently:
+ * {{{
+ *     lift(id,,α,,) = id,,F[α],,                        preserve identities
+ *       lift(f ∘ g) = (lift f) ∘ (lift g)               preserve compositions
+ * }}}
+ * for all types `α`, values `Fa` in `F[α]`, and composable functions `f` and
+ * `g`, where `id,,α,,` denotes the identity function at type `α`.
  *
- * In other words the function `map` preserves identity functions and function
- * compositions.
+ * That is, `lift` preserves identity functions and function compositions, and
+ * is thus a homomorphism from `Scala` to the sub-category `F[Scala]`.
  *
  * @tparam F  A unary type constructor whose instances can be 'mapped over' in
  *            some sense.
@@ -48,25 +53,54 @@ package math
 trait Functor[F[_]]
 {
   /**
-   * @param Fa  .
-   * @param f   .
+   * Returns the result of 'mapping' the given function over the given value,
+   * whatever this may mean for the specific functor in question.
    *
-   * @return
+   * The only requirement is that this `mapping` must preserve both identities
+   * and function compositions; that is:
+   * {{{
+   *     map(Fa)(id,,α,,) = Fa                           preserve identities
+   *       map(Fa)(f ∘ g) = map(map(Fa)(g))(f)           preserve compositions
+   * }}}
+   * for all types `α`, values `Fa` in `F[α]`, and composable functions `f` and
+   * `g`, where `id,,α,,` denotes the identity function at type `α`.
+   *
+   * @param Fa  A value of type `F[α]`.
+   * @param f   A function from type `α` to type `β`.
+   *
+   * @return The result of 'mapping' the function `f` over `Fa`, whatever this
+   *         may mean for the specific functor in question.
    */
   def map[α,β](Fa: F[α])(f: α ⇒ β): F[β] =
   {
-    lift(f)(Fa)
+    lift(f)(Fa)                                          // Delegate to lift
   }
 
   /**
-   * @param f   .
-   * @param Fa  .
+   * Returns the result of 'mapping' the given function over the given value,
+   * whatever this may mean for the specific functor in question.
    *
-   * @return
+   * The only requirement is that this `mapping` must preserve both identities
+   * and function compositions; that is:
+   * {{{
+   *     lift(id,,α,,) = id,,F[α],,                      preserve identities
+   *       lift(f ∘ g) = (lift f) ∘ (lift g)             preserve compositions
+   * }}}
+   * for all types `α`, values `Fa` in `F[α]`, and composable functions `f` and
+   * `g`, where `id,,α,,` denotes the identity function at type `α`.
+   *
+   * In other words, `lift` is a homomorphism from the category `Scala` to the
+   * sub-category `F[Scala]`.
+   *
+   * @param f   A function from type `α` to type `β`.
+   * @param Fa  A value of type `F[α]`.
+   *
+   * @return The result of 'mapping' the function `f` over `Fa`, whatever this
+   *         may mean for the specific functor in question.
    */
   def lift[α,β](f: α ⇒ β)(Fa: F[α]): F[β] =
   {
-    map(Fa)(f)
+    map(Fa)(f)                                            // Delegate to map
   }
 }
 
