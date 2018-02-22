@@ -65,8 +65,8 @@ trait Functor[F[_]]
    * for all types `α`, values `Fa` in `F[α]`, and composable functions `f` and
    * `g`, where `id,,α,,` denotes the identity function at type `α`.
    *
-   * @param Fa  A value of type `F[α]`.
-   * @param f   A function from type `α` to type `β`.
+   * @param  Fa  A value of type `F[α]`.
+   * @param  f   A function from type `α` to type `β`.
    *
    * @return The result of 'mapping' the function `f` over `Fa`, whatever this
    *         may mean for the specific functor in question.
@@ -92,8 +92,8 @@ trait Functor[F[_]]
    * In other words, `lift` is a homomorphism from the category `Scala` to the
    * sub-category `F[Scala]`.
    *
-   * @param f   A function from type `α` to type `β`.
-   * @param Fa  A value of type `F[α]`.
+   * @param  f   A function from type `α` to type `β`.
+   * @param  Fa  A value of type `F[α]`.
    *
    * @return The result of 'mapping' the function `f` over `Fa`, whatever this
    *         may mean for the specific functor in question.

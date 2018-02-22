@@ -61,7 +61,7 @@ trait manifest
    *    "v1.0.0-SNAPSHOT"
    * }}}
    *
-   * @param string  A template string that may contain attribute placeholders.
+   * @param  string  A template string containing attribute placeholders.
    *
    * @return  A copy of the input string in which each plaheholder is replaced
    *          its respective value in the manifest, or the empty string if no

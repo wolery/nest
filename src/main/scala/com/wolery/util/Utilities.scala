@@ -201,9 +201,9 @@ trait utilities
    *
    * By 'closed' we mean that the interval includes its own bounds.
    *
-   * @param lo  The lower bound of the range to which `v` is clamped.
-   * @param v   The value to be clamped.
-   * @param hi  The upper bound of the range to which `v` is clamped.
+   * @param  lo  The lower bound of the range to which `v` is clamped.
+   * @param  v   The value to be clamped.
+   * @param  hi  The upper bound of the range to which `v` is clamped.
    *
    * @return The value `v`, clamped to lie within the closed interval `[lo, hi]`.
    */
