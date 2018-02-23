@@ -16,10 +16,13 @@ package com.wolery
 package fx
 package util
 
-import scala.collection.JavaConverters._
 import javafx.application.{Application ⇒ application}
 import javafx.stage.Stage
+
+import scala.collection.JavaConverters._
+
 import com.wolery.util.Logging
+
 import applications._
 
 /**
@@ -131,8 +134,8 @@ trait Application extends Logging
    *
    * Called on the JavaFX application thread.
    *
-   * @param stage  The primary stage for this application, onto which the main
-   *               application scene can then be set.
+   * @param  stage  The primary stage for this application onto which the main
+   *                application scene is then set.
    *
    * @throws Exception if something goes wrong.
    */
@@ -174,8 +177,8 @@ trait Application extends Logging
    *
    * Must be called on the JavaFX application thread.
    *
-   * @param url  The URL for the user agent stylesheet, or `None` to revert to
-   *             using the default stylesheet.
+   * @param  url  The URL of the user agent stylesheet, or `None` to revert to
+   *              using the default stylesheet.
    */
   def stylesheet_=(url: Option[String]): Unit =
   {
@@ -227,8 +230,8 @@ trait Application extends Logging
    * Does not return until the application  has exited,  either with a call to
    * `Platform.exit`, `System.exit`, or the closing of the last stage window.
    *
-   * @param args  The raw command line arguments. These can be retrieved later
-   *              with the `raw/named/unnamedParameters` methods.
+   * @param  args  The raw command line arguments. They can be retrieved later
+   *               with the `raw/named/unnamedParameters` methods.
    *
    * @throws IllegalStateException if called more than once.
    *

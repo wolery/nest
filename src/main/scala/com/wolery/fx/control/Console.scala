@@ -10,7 +10,7 @@
 //*  Comments: This file uses a tab size of 2 spaces.
 //*
 //*
-//*  See Also: https://ss64.com/osx/syntax-bashkeyboard.html
+//*  See Also: https://ss64.com/osx/syntax-bashkeyboard.html.
 //*                                                                     0-0
 //*                                                                   (| v |)
 //**********************************************************************w*w***

@@ -29,7 +29,7 @@ trait Suite extends FunSuite with PropertyChecks
   /**
    * Asserts that the given value is false, and throws an exception if not.
    *
-   * @param bool  A boolean value to test.
+   * @param  bool  A boolean value to test.
    *
    * @throws TestFailedException   if `bool` is `false`.
    */
@@ -43,9 +43,9 @@ trait Suite extends FunSuite with PropertyChecks
    *
    * This variant includes the given clue in the generated failure report.
    *
-   * @param bool  A boolean value to test.
-   * @param clue  A value whose toString() method returns a message to include
-   *              in the failure report.
+   * @param  bool  A boolean value to test.
+   * @param  clue  A value whose `toString` method returns a string to include
+   *               in the failure report.
    *
    * @throws TestFailedException   if `bool` is `false`.
    * @throws NullArgumentException if `clue` is `null`.

@@ -249,8 +249,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Int]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -259,8 +259,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Bool]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -269,8 +269,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Long]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -279,8 +279,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Float]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -289,8 +289,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Double]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -299,8 +299,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[String]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -309,8 +309,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Seq[Int]]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -319,8 +319,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Seq[Bool]]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -329,8 +329,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Seq[Long]]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -339,8 +339,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Seq[Float]]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -349,8 +349,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Seq[Double]]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -359,8 +359,8 @@ class Preferences private (private val m_imp: JavaPreferences)
   /**
    * Creates a `Preference[Seq[String]]` with the given name and default value.
    *
-   * @param name     The name of the new preference.
-   * @param default  The default value for the new preference.
+   * @param  name     The name of the new preference.
+   * @param  default  The default value for the new preference.
    *
    * @return The new preference.
    */
@@ -408,6 +408,7 @@ class Preferences private (private val m_imp: JavaPreferences)
    * delegates to the given parser to read the elements back again.
    *
    * @tparam α      The type of a sequence element.
+   *
    * @param  parse  A parser for elements of type `α`.
    *
    * @return A function that constructs a `Preference[Seq[α]]` from a name and
