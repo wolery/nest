@@ -31,7 +31,7 @@ trait Suite extends FunSuite with PropertyChecks
    *
    * @param  bool  A boolean value to test.
    *
-   * @throws TestFailedException   if `bool` is `false`.
+   * @throws TestFailedException if `bool` is `false`.
    */
   def reject(bool: Bool)(implicit α: Prettifier,β: source.Position): Assertion =
   {

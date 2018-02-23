@@ -16,6 +16,7 @@ package com.wolery
 package util
 
 import java.util.jar.Manifest
+
 import scala.util.matching.Regex
 
 /**
