@@ -49,14 +49,14 @@ trait manifest
    * Replaces occurrences of attribute  placeholders within the given template
    * string with their respective values in the manifest.
    *
-   * An attribute placeholder is specified with the syntax `${<attribute>}` as
+   * An attribute placeholder is specified with the syntax `\${attribute}`, as
    * if referring to a variable from within a Scala string interpolation.  The
    * attribute values themselves are specified in the parent POM, and embedded
    * within the manifest at build time.
    *
    * For example:
    * {{{
-   *    manifest.format("v${Implementation-Version}")    // Get version string
+   *    manifest.format("v$\{Implementation-Version}")   // Get version string
    * }}}
    * might return something like:
    * {{{
@@ -72,7 +72,7 @@ trait manifest
   def format(string: String): String =
   {
     val a = attributes                                   // Get the attributes
-    val p = m_regex                                      // Matches ${<ident>}
+    val p = m_regex                                      // Matches ${attrib}
 
     p.replaceAllIn(string,m ⇒ a.getOrElse(m.group(1),""))// Replace with value
   }
@@ -93,7 +93,7 @@ trait manifest
    * A regular expression that matches an attribute placeholder.
    */
   private lazy
-  val m_regex: Regex = """\$\{([A-Za-z-]+)\}""".r        // Matches ${<ident>}
+  val m_regex: Regex = """\$\{([A-Za-z-]+)\}""".r        // Matches ${attrib}
 }
 
 /**
