@@ -26,11 +26,12 @@ trait menu
 {
   /**
    * For those platforms that support a single 'system' menu bar (e.g. Mac OS)
-   * attempt to move the application menus up into the shared system menu bar.
+   * attempt to move the given application menu up into the shared system menu
+   * bar.
    *
    * Moreover,  if the platform provides a  special 'application' menu that is
-   * pre-populated with menu items created by the system, merge the items from
-   * the first menu in the given menu bar into the existing application menu.
+   * pre-populated with default items,  merge the items from the first menu in
+   * the given menu bar into this existing application menu.
    *
    * @param  menubar  The list of menus to move up into the system menu bar.
    */
@@ -41,29 +42,30 @@ trait menu
     import com.sun.glass.ui.MenuItem.{Callback, Separator ⇒ gSeperator}
     import com.sun.javafx.PlatformUtil.isMac
     import com.wolery.util.reflect.method
+
     /**
      * Goodness, this took Ages to get right!  I've seen all sorts of attempts
      * out there online, including Jay Gassen's NSMenuFX, from which I learned
-     * the trick of using reflection to gain access to an otherwise  protected
-     * class, as well out of date and conflicting documentation describing the
-     * use of AWT or Swing desktop classes - all incompatible with JavaFX. Why
-     * was this so hard?
+     * the trick of using reflection to  gain access to an otherwise protected
+     * class, as well as out of date and conflicting documentation describing
+     * the use of AWT or Swing desktop classes - all incompatible with JavaFX.
+     * Why was this so difficult?
      *
-     * The problem is to 'add' items to the existing Apple menu  while leaving
-     * the existing system generated items for things like 'Show All' intact,
-     * so that things continue to work correctly when future versions of the
-     * OS add new default application menu items we have not yet thoought of.
-     * Jay, by contrast, discards the existing Apple menu entirely.
+     * The problem is to prepend items to an existing Apple menu while leaving
+     * existing system generated items like 'Show All'  intact so that  things
+     * continue to work correctly when a future version of the system adds new
+     * default application menu items we have not yet thought of. By contrast,
+     * the NSMenuFX approach discards the existing Apple menu entirely.
      *
-     * Moreover, Sun's implementation of the Apple menu is expressed in terms
-     * of an entirely different, but dual, set of Menu, MenuItem, and MenuBar
-     * classes - i've no idea why - making the translation of key combinations
-     * to accelerator modifiers tricky.
+     * Moreover,  Sun's implementation of the Apple menu is expressed in terms
+     * of an entirely separate - but dual - set of Menu, MenuItem, and MenuBar
+     * classes - I've no idea why - making the translation of key combinations
+     * to accelerator modifiers difficult.
      */
     if (isMac && !menubar.getMenus.isEmpty)              // Something to do?
     {
       /**
-       * Returns the 'Glass' Apple menu.
+       * Returns the Apple menu as a 'Glass' menu.
        *
        * Uses reflection to work around the fact that, at least on JVM9, this
        * public method belongs to a subclass of 'com.sun.glass.ui.Application'
@@ -77,9 +79,12 @@ trait menu
       }
 
       /**
-       * Creates a 'Glass' menu copy of the the given javafx menu item.
+       * Creates a copy of the the given JavaFX menu item as a 'Glass' menu.
        *
        * Preserves any existing accelerator key modifiers and callback.
+       *
+       * Called once for every item in the first menu of the caller's menu bar
+       * to create an object suitable for insertion into the Apple menu.
        */
       def gMenuItem(i: MenuItem): gMenuItem =
       {
@@ -106,8 +111,8 @@ trait menu
         GetApplication.createMenuItem(i.getText,c,k,m)   // Glass menu item
       }
 
-      val a = appleMenu()                                // Fetch Apple menu
-      val n = a.getItems.size                            // Record its size
+      val a = appleMenu()                                // Get the Apple menu
+      val n = a.getItems.size                            // Remember its size
 
    /* Append (a 'Glass' copy of) each item from the first menu of the caller's
       menu bar to the end of the existing Apple menu...*/
@@ -120,6 +125,7 @@ trait menu
 
    /* ...now move the 'n' original items from the top of the Apple menu to
       the bottom,  effectively rotating the contents of the menu 'n' times.
+
       Why this odd way of doing things? Why not simply insert the items at
       the top of the menu, where we actually want them?  Answer: the Glass
       method gMenu.insert(item,index) does not appear to handle separators
