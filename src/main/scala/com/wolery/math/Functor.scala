@@ -4,8 +4,8 @@
 //*  Version : $Header:$
 //*
 //*
-//*  Purpose : Describes the operations that allow the type constructor `F[_]`
-//*            to act as a (covariant endo-) functor on the category `Scala`.
+//*  Purpose : Describes the operations that allow the type constructor 'F[_]'
+//*            to act as a (covariant endo-) functor on the category 'Scala'.
 //*
 //*  Comments: This file uses a tab size of 2 spaces.
 //*                                                                     0-0
@@ -25,17 +25,17 @@ package math
  *
  * The term originates from category theory, where it refers to a homomorphism
  * between categories. For us, the relevant category is `Scala`, whose objects
- * are types, and morphisms the computable functions between them.
+ * are types and whose morphisms are the computable functions between them.
  *
  * Instances satisfy the axioms:
  * {{{
  *     map(Fa)(id,,α,,) = Fa                             preserve identities
- *       map(Fa)(f ∘ g) = map(map(Fa)(g))(f)             preserve compositions
+ *     map(Fa)(f ∘ g)   = map(map(Fa)(g))(f)             preserve compositions
  * }}}
  * or, equivalently:
  * {{{
  *     lift(id,,α,,) = id,,F[α],,                        preserve identities
- *       lift(f ∘ g) = (lift f) ∘ (lift g)               preserve compositions
+ *     lift(f ∘ g)   = (lift f) ∘ (lift g)               preserve compositions
  * }}}
  * for all types `α`, values `Fa` in `F[α]`, and composable functions `f` and
  * `g`, where `id,,α,,` denotes the identity function at type `α`.
