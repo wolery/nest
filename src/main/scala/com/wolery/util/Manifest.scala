@@ -97,7 +97,7 @@ trait manifest
 }
 
 /**
- * Miscellaneous utility functions for working with a manifest.
+ *  Miscellaneous utility functions for reading the manifest.
  *
  * @author Jonathon Bell
  */
