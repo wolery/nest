@@ -140,7 +140,8 @@ class Console extends TextArea with Logging
                                        (KEY_TYPED,  onKeyTyped   _))
 
   swap(Seq(),m_filters)                                  // Initialize filters
-  getStyleClass.add("console");                          // Style class name
+  getStyleClass.clear()                                  // Clear class styles
+  getStyleClass.add("console")                           // Style class name
 
   /**
    * A bean property that records the current event handler for the `Accept`
