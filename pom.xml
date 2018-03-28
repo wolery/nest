@@ -33,7 +33,7 @@
   <name>Nest</name>
   <description>Wolery Core Libraries for Scala</description>
   <url>https://github.com/wolery/nest</url>
-  <inceptionYear>January 2018</inceptionYear>
+  <inceptionYear>2018</inceptionYear>
 
   <dependencies>
     <dependency>
