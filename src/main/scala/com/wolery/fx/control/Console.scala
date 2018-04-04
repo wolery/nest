@@ -163,19 +163,34 @@ class Console extends TextArea with Logging
    *
    * The default implementation simply wires up the usual cut, copy, paste and
    * select-all commands but subclasses can override this method to completely
-   * redefine the actual context menu used.
+   * redefine the actual context menu used if necessary.
    *
    * @return A context menu suitable for use with this control.
    */
   def createContextMenu(): ContextMenu =
   {
-    import menu._                                        // Menu builder API
+    import menu._                                        // For menu builders
 
-    new ContextMenu(
-    new MenuItem("Cut")       .accelerator("◆X").onAction{cut()},
-    new MenuItem("Copy")      .accelerator("◆C").onAction{copy()},
-    new MenuItem("Paste")     .accelerator("◆V").onAction{paste()},
-    new MenuItem("Select All").accelerator("◆A").onAction{selectAll()})
+    val x = new MenuItem("Cut")       .accelerator("◆X").onAction{cut()}
+    val c = new MenuItem("Copy")      .accelerator("◆C").onAction{copy()}
+    val v = new MenuItem("Paste")     .accelerator("◆V").onAction{paste()}
+    val a = new MenuItem("Select All").accelerator("◆A").onAction{selectAll()}
+
+    new ContextMenu(x,c,v,a).onShowing
+    {
+      val e = hasSelection                               // Update the enable
+      x.enable(e)                                        // state of any items
+      c.enable(e)                                        // that act upon the
+      a.enable(e)                                        // input selection
+    }
+  }
+
+  /**
+   * Returns true if one or more input area characters is currently selected.
+   */
+  def hasSelection(): Bool =
+  {
+    getSelection.getLength != 0                          // Text is selected?
   }
 
   /**
