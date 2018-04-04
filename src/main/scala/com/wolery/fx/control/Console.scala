@@ -305,7 +305,7 @@ class Console extends TextArea with Logging
    *                within the input area.
    */
   override
-  def replaceText(start: ℕ,end: ℕ,text: String) =
+  def replaceText(start: ℕ,end: ℕ,text: String): Unit =
   {
     assert(isIncreasing(0,start,end,getLength))          // Validate arguments
 
@@ -326,7 +326,7 @@ class Console extends TextArea with Logging
    * @param  text  The text to append to the output area.
    */
   override
-  def appendText(text: String) =
+  def appendText(text: String): Unit =
   {
     log.trace("appendText({})",text)                     // Trace out location
 
@@ -347,7 +347,7 @@ class Console extends TextArea with Logging
    *
    * @param  text  The text to append to the output area.
    */
-  def appendLine(text: String) =
+  def appendLine(text: String): Unit =
   {
     log.trace("appendLine({})",text)                     // Trace our location
 
