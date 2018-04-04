@@ -22,7 +22,7 @@ package control
 import java.io.Writer
 import java.lang.System.{lineSeparator ⇒ EOL}
 
-import javafx.scene.control.TextArea
+import javafx.scene.control.{TextArea,ContextMenu,MenuItem}
 import javafx.scene.input.{KeyCode,KeyEvent}
 import javafx.scene.input.KeyEvent.{KEY_PRESSED,KEY_TYPED}
 import javafx.event.{ActionEvent,Event,EventHandler,EventType}
@@ -142,6 +142,7 @@ class Console extends TextArea with Logging
   swap(Seq(),m_filters)                                  // Initialize filters
   getStyleClass.clear()                                  // Clear class styles
   getStyleClass.add("console")                           // Style class name
+  setContextMenu(this.createContextMenu)                 // Call the subclass
 
   /**
    * A bean property that records the current event handler for the `Accept`
@@ -156,6 +157,26 @@ class Console extends TextArea with Logging
    */
   @BeanProperty final
   var onComplete: EventHandler[ActionEvent] = _
+
+  /**
+   * Construct and return a context menu suitable for use with this control.
+   *
+   * The default implementation simply wires up the usual cut, copy, paste and
+   * select-all commands but subclasses can override this method to completely
+   * redefine the actual context menu used.
+   *
+   * @return A context menu suitable for use with this control.
+   */
+  def createContextMenu(): ContextMenu =
+  {
+    import menu._                                        // Menu builder API
+
+    new ContextMenu(
+    new MenuItem("Cut")       .accelerator("◆X").onAction{cut()},
+    new MenuItem("Copy")      .accelerator("◆C").onAction{copy()},
+    new MenuItem("Paste")     .accelerator("◆V").onAction{paste()},
+    new MenuItem("Select All").accelerator("◆A").onAction{selectAll()})
+  }
 
   /**
    * A bean property that records the maximum number of commands that can ever
