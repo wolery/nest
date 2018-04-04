@@ -29,7 +29,7 @@ import javafx.scene.input.KeyCombination
 object menu
 {
   /**
-   *
+   * Extends class `MenuItem` with the methods of a fluent builder API.
    */
   implicit final
   class MenuItemBuilder(val x: MenuItem) extends AnyVal
@@ -50,16 +50,26 @@ object menu
   }
 
   /**
-   *
+   * Extends class `CheckMenuItem` with the methods of a fluent builder API.
    */
   implicit final
   class CheckMenuItemBuilder(val x: CheckMenuItem) extends AnyVal
   {
-    def select          (v: Bool)           = {x.setSelected(v);    x}
+    def selected        (v: Bool)           = {x.setSelected(v);    x}
   }
 
   /**
-   *
+   * Extends class `RadioMenuItem` with the methods of a fluent builder API.
+   */
+  implicit final
+  class RadioMenuItemSyntax(val x: RadioMenuItem) extends AnyVal
+  {
+    def selected        (v: Bool)           = {x.setSelected(v);    x}
+    def toggleGroup     (v: ToggleGroup)    = {x.setToggleGroup(v); x}
+  }
+
+  /**
+   * Extends class `CustomMenuItem` with the methods of a fluent builder API.
    */
   implicit final
   class CustomMenuItemBuilder(val x: CustomMenuItem) extends AnyVal
@@ -69,17 +79,7 @@ object menu
   }
 
   /**
-   *
-   */
-  implicit final
-  class RadioMenuItemSyntax(val x: RadioMenuItem) extends AnyVal
-  {
-    def select          (v: Bool)           = {x.setSelected(v);    x}
-    def toggleGroup     (v: ToggleGroup)    = {x.setToggleGroup(v); x}
-  }
-
-  /**
-   *
+   * Extends class `Menu` with the methods of a fluent builder API.
    */
   implicit final
   class MenuBuilder(val x: Menu) extends AnyVal
@@ -91,13 +91,25 @@ object menu
   }
 
   /**
-   * Parse the given string for an accelerator key combination.
+   * Extends class `ContextMenu` with the methods of a fluent builder API.
+   */
+  implicit final
+  class ContextMenuBuilder(val x: ContextMenu) extends AnyVal
+  {
+    def onHidden        (v: ⇒ Unit)         = {x.setOnHidden (_⇒v); x}
+    def onHiding        (v: ⇒ Unit)         = {x.setOnHiding (_⇒v); x}
+    def onShowing       (v: ⇒ Unit)         = {x.setOnShowing(_⇒v); x}
+    def onShown         (v: ⇒ Unit)         = {x.setOnShown  (_⇒v); x}
+  }
+
+  /**
+   * Parse the given string for a key combination.
    *
    * Extends the mini language recognized by the parser for the system defined
    * `KeyCombination` class to include the special characters '⌥' (alt/option),
    * '^' (control), '⇧' (shift), and '◆' (meta/command).
    *
-   * @return The accelerator key combination described by the given string.
+   * @return The key combination described by the given string.
    */
   def keyCombination(name: String): KeyCombination =
   {
@@ -143,7 +155,7 @@ object menu
      * Why was this so difficult?
      *
      * The problem is to prepend items to an existing Apple menu while leaving
-     * existing system generated items like 'Show All'  intact so that  things
+     * existing system generated items like 'Show All'  intact, so that things
      * continue to work correctly when a future version of the system adds new
      * default application menu items we have not yet thought of. By contrast,
      * the NSMenuFX approach discards the existing Apple menu entirely.
@@ -151,7 +163,7 @@ object menu
      * Moreover,  Sun's implementation of the Apple menu is expressed in terms
      * of an entirely separate - but dual - set of Menu, MenuItem, and MenuBar
      * classes - I've no idea why - making the translation of key combinations
-     * to accelerator modifiers difficult.
+     * to accelerator modifiers harder than it should be.
      */
     if (isMac && !menubar.getMenus.isEmpty)              // Something to do?
     {
