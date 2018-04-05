@@ -4,7 +4,7 @@
 //*  Version : $Header:$
 //*
 //*
-//*  Purpose : Common definitions used throughout the wolery.
+//*  Purpose : Common definitions used throughout the Wolery.
 //*
 //*
 //*  Comments: This file uses a tab size of 2 spaces.
@@ -15,7 +15,7 @@
 package com
 
 /**
- * Common definitions used throughout the wolery.
+ * Common definitions used throughout the Wolery.
  *
  * @author Jonathon Bell
  */
