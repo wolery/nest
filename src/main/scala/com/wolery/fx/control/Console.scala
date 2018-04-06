@@ -178,10 +178,9 @@ class Console extends TextArea with Logging
 
     new ContextMenu(x,c,v,a).onShowing
     {
-      val e = hasSelection                               // Update the enable
-      x.enable(e)                                        // state of any items
-      c.enable(e)                                        // that act upon the
-      a.enable(e)                                        // input selection
+      x.enable(hasSelection)                             // Chars to cut?
+      c.enable(hasSelection)                             // Chars to copy?
+      a.enable(!input.isEmpty)                           // Chars to select?
     }
   }
 
