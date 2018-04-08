@@ -291,19 +291,27 @@ class Console extends TextArea with Logging
   }
 
   /**
-   * A Writer that appends text to the output area.
+   * A `Writer` object that appends text to the output area.
    *
    * Characters written to this object are appended to the output area and the
    * prompt and input areas are then  re-established to immediately follow the
-   * newly added text.
+   * newly appended text.
    */
   val writer: Writer = new Writer
   {
-    def close: Unit = {}                                 // Nothing to do
-    def flush: Unit = {}                                 // Nothing to do
-    def write(cbuf: Array[Char],off: ℕ,len: ℕ): Unit =
+    def close: Unit = {}                                 // Nothing to do here
+    def flush: Unit = {}                                 // Nothing to do here
+
+    /**
+     * Appends a portion of the given character array to the output area.
+     *
+     * @param  a  The array of characters to append.
+     * @param  o  The offset into `a` from which to start copying characters.
+     * @param  n  The number of characters to copy
+     */
+    def write(a: Array[Char],o: ℕ,n: ℕ): Unit =
     {
-      appendText(new String(cbuf.slice(off,off + len)))  // Add to output area
+      appendText(new String(a.slice(o,o + n)))           // Add to output area
     }
   }
 
