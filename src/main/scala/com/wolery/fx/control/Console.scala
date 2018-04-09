@@ -653,7 +653,7 @@ class Console extends TextArea with Logging
   {
     log.debug("changeWord()")                            // Trace our location
 
-    var c = getCaretPosition                             // The caret position
+    val c = getCaretPosition                             // The caret position
 
     when (c < getLength)                                 // Room to move into?
     {
