@@ -25,7 +25,7 @@ import java.lang.System.{lineSeparator ⇒ EOL}
 import javafx.scene.control.{TextArea,ContextMenu,MenuItem}
 import javafx.scene.input.{KeyCode,KeyEvent}
 import javafx.scene.input.KeyEvent.{KEY_PRESSED,KEY_TYPED}
-import javafx.event.{ActionEvent,Event,EventHandler,EventType}
+import javafx.event.{ActionEvent,EventHandler,EventType}
 
 import scala.beans.BeanProperty
 import scala.collection.mutable.Buffer
