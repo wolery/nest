@@ -20,11 +20,16 @@ package math
  *
  * Every finite type is isomorphic to some initial segment `[0, .. , n)` of ℕ,
  * the set of natural numbers, although the bijection is of course not unique,
- * there being one for each of the `n!` permutations of the `n` values.
+ * there being one for each of the `n!` permutations of the type's `n` values.
  *
  * Any such mapping is sufficient to uniquely encode the values of the type as
- * natural numbers, however, allowing us to easily enumerate them,  store them
- * in bit sets, and so forth.
+ * natural numbers, however,  thus enabling us to easily enumerate them, store
+ * them in bit sets, and so forth.
+ *
+ * Class `Finite` represents a type class whose instances effect such mappings
+ * for 'small' types with, say, just a few hundred values or less.
+ *
+ * See class `FiniteSet` for an example of how we can exploit this capability.
  *
  * Instances satisfy the axioms:
  * {{{
@@ -73,6 +78,42 @@ trait Finite[α]
    * @return A value of type `α`. Undefined when `n ∉ [0, size)`.
    */
   def fromℕ(n: ℕ): α
+}
+
+/**
+ * Companion object for class `Finite`.
+ *
+ * @author Jonathon Bell
+ */
+object Finite
+{
+  /**
+   * An instance of the type class `Finite` for the type `Byte`.
+   */
+  implicit
+  object `Finite[Byte]` extends Finite[Byte]
+  {
+    val size: ℕ                  = 256
+    def toℕ(b: Byte): ℕ          = (if (b <   0) 127 - b else b).toInt
+    def fromℕ(i: ℕ): Byte        = (if (i > 127) 127 - i else i).toByte
+  }
+
+  /**
+   * Derives an instance of the type class `Finite` for the given enumeration.
+   *
+   * Assumes the enumeration 'begins at 0'; that is, the value of 'id' for the
+   * first element of the enumeration is `0`.
+   *
+   * @param  enum  An arbitrary enumeration.
+   *
+   * @return Evidence that the given enumeration is indeed finite.
+   */
+  def apply(enum : Enumeration): Finite[enum.Value] = new Finite[enum.Value]
+  {
+    val size: ℕ                  = enum.values.size      // Number of values
+    def toℕ(e: enum.Value): ℕ    = e.id                  // Return the id
+    def fromℕ(n: ℕ): enum.Value  = enum(n)               // Search for id
+  }
 }
 
 //****************************************************************************
