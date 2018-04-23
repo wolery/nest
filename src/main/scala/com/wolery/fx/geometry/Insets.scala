@@ -55,7 +55,7 @@ object Insets
    * @param  rl  The size in pixels of the right and left insets.
    *
    * @return An instance whose top and bottom insets are initialized to `tb`,
-   * and whose right and left insets are initialized to `rl`.
+   *         and whose right and left insets are initialized to `rl`.
    */
   def apply(tb: ℝ,rl: ℝ): jInsets =
   {

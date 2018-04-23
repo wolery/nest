@@ -84,7 +84,7 @@ trait Preference[α]
    * @param  value  The new value for the preference.
    */
   @inline final
-  def apply (value: α): Unit = value_=(value)
+  def apply(value: α): Unit = value_=(value)
 
   /**
    * Updates the current value of the preference with the given value.
@@ -133,7 +133,7 @@ class Preferences private (private val m_imp: JavaPreferences)
    * the root of the user preference tree.
    *
    * Unless the location existed prior to construction, the subtree may not be
-   * committed to disk until once the `flush` method has been called.
+   * committed to disk until the `flush` method has been called.
    *
    * @param  path  The path to the persisted values, specified relative to the
    *               root of user preference tree.
@@ -155,7 +155,7 @@ class Preferences private (private val m_imp: JavaPreferences)
    * characters.
    *
    * Unless the location existed prior to construction, the subtree may not be
-   * committed to disk until once the `flush` method has been called.
+   * committed to disk until the `flush` method has been called.
    *
    * @param  c  The class whose package name specifies the path to the values,
    *            specified relative to the root of user preference tree.
@@ -175,7 +175,7 @@ class Preferences private (private val m_imp: JavaPreferences)
    * the root of the user preference tree.
    *
    * Unless the location existed prior to construction, the subtree may not be
-   * committed to disk until once the `flush` method has been called.
+   * committed to disk until the `flush` method has been called.
    *
    * @param  parent  An existing parent preferences factory.
    * @param  path    The path to the preference values, specficied relative to
@@ -196,7 +196,7 @@ class Preferences private (private val m_imp: JavaPreferences)
    * the root of the user preference tree.
    *
    * Unless the location existed prior to construction, the subtree may not be
-   * committed to disk until once the `flush` method has been called.
+   * committed to disk until the `flush` method has been called.
    *
    * @param  path  The path to the persisted values, specified relative to the
    *               root of user preference tree if absolute (starts with `/`),
