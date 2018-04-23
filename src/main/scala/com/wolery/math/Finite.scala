@@ -95,7 +95,7 @@ object Finite
   {
     val size: ℕ                  = 256
     def toℕ(b: Byte): ℕ          = (if (b <   0) 127 - b else b).toInt
-    def fromℕ(i: ℕ): Byte        = (if (i > 127) 127 - i else i).toByte
+    def fromℕ(n: ℕ): Byte        = (if (n > 127) 127 - n else n).toByte
   }
 
   /**
