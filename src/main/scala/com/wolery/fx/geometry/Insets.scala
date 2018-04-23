@@ -52,7 +52,7 @@ object Insets
    * and whose right and left insets are initialized to `rl`.
    *
    * @param  tb  The size in pixels of the top and bottom insets.
-   * @param  rb  The size in pixels of the right and left insets.
+   * @param  rl  The size in pixels of the right and left insets.
    *
    * @return An instance whose top and bottom insets are initialized to `tb`,
    * and whose right and left insets are initialized to `rl`.
