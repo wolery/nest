@@ -77,7 +77,6 @@ package object wolery
     def >=       (b: α)       : Bool = ε.gteq(a,b)
     def ≡        (b: α)       : Bool = ε.equiv(a,b)
     def equiv    (b: α)       : Bool = ε.equiv(a,b)
-    def isBetween(lo: α,hi: α): Bool = ε.lteq(lo,a) && ε.lteq(a,hi)
   }
 
   /**
@@ -94,7 +93,8 @@ package object wolery
   {
     def max      (b: α)       : α    = ε.max(a,b)
     def min      (b: α)       : α    = ε.min(a,b)
-    def isBetween(lo: α,hi: α): Bool = ε.lteq(lo,a) && ε.lteq(a,hi)
+    def clamp    (l: α,h: α)  : α    = util.utilities.clamp    (a,l,h)
+    def isBetween(l: α,h: α)  : Bool = util.utilities.isBetween(a,l,h)
   }
 
   /**
