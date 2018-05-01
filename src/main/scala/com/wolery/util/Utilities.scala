@@ -110,6 +110,31 @@ trait utilities
   def superscript(s: String): String = s.map(superscript)
 
   /**
+   * Clamp the given value to lie within the closed interval `[lo, hi]`.
+   *
+   * By 'closed' we mean that the interval includes its own bounds.
+   *
+   * @param  lo  The lower bound of the range to which `v` is clamped.
+   * @param  v   The value to be clamped.
+   * @param  hi  The upper bound of the range to which `v` is clamped.
+   *
+   * @return The value `v`, clamped to lie within the closed interval `[lo, hi]`.
+   */
+  final
+  def clamp[α: Ordering](lo: α,v: α,hi: α): α =
+  {
+    assert(lo <= hi);                                    // Validate arguments
+
+    if (v < lo)                                          // Less than 'lo'?
+      lo                                                 // ...clamp to 'lo'
+    else
+    if (v > hi)                                          // Greater than 'hi'?
+      hi                                                 // ...clamp to 'hi'
+    else                                                 // Within interval
+      v                                                  // ...nothing to do
+  }
+
+  /**
    * Returns true if the value `v` lies within the closed interval `[lo, hi]`.
    *
    * By 'closed' we mean that the interval includes its own bounds.
@@ -194,31 +219,6 @@ trait utilities
   def isPowerOf2(i: ℤ): Bool =
   {
     i > 0 && (i & (i-1)) == 0                            // Mask off with i-1
-  }
-
-  /**
-   * Clamp the given value to lie within the closed interval `[lo, hi]`.
-   *
-   * By 'closed' we mean that the interval includes its own bounds.
-   *
-   * @param  lo  The lower bound of the range to which `v` is clamped.
-   * @param  v   The value to be clamped.
-   * @param  hi  The upper bound of the range to which `v` is clamped.
-   *
-   * @return The value `v`, clamped to lie within the closed interval `[lo, hi]`.
-   */
-  final
-  def clamp[α: Ordering](lo: α,v: α,hi: α): α =
-  {
-    assert(lo <= hi);                                    // Validate arguments
-
-    if (v < lo)                                          // Less than 'lo'?
-      lo                                                 // ...clamp to 'lo'
-    else
-    if (v > hi)                                          // Greater than 'hi'?
-      hi                                                 // ...clamp to 'hi'
-    else                                                 // Within interval
-      v                                                  // ...nothing to do
   }
 
   /**
