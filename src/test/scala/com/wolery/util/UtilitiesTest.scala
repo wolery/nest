@@ -33,6 +33,15 @@ class UtiltiesTest extends test.Suite with utilities
     assert(superscript("ABC")        == "ABC",           "[3]")
   }
 
+  test("clamp")
+  {
+    assert(clamp(-1,-2,+1) == -1,                        "[1]")
+    assert(clamp(-1,-1,+1) == -1,                        "[2]")
+    assert(clamp(-1, 0,+1) ==  0,                        "[3]")
+    assert(clamp(-1,+1,+1) == +1,                        "[4]")
+    assert(clamp(-1,+2,+1) == +1,                        "[5]")
+  }
+
   test("isBetween")
   {
     assert((-8 to +8).map(_.isBetween(-2,+2)) ==
@@ -73,15 +82,6 @@ class UtiltiesTest extends test.Suite with utilities
   {
     assert((-8 to +8).map(isPowerOf2) ==
            "FFFFFFFFFTTFTFFFT".map(_=='T'),              "[1]")
-  }
-
-  test("clamp")
-  {
-    assert(clamp(-1,-2,+1) == -1,                        "[1]")
-    assert(clamp(-1,-1,+1) == -1,                        "[2]")
-    assert(clamp(-1, 0,+1) ==  0,                        "[3]")
-    assert(clamp(-1,+1,+1) == +1,                        "[4]")
-    assert(clamp(-1,+2,+1) == +1,                        "[5]")
   }
 
   test("mod")
