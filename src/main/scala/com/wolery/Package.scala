@@ -55,8 +55,8 @@ package object wolery
   implicit final
   class BoolSyntax(val a: Bool) extends AnyVal
   {
-    def iff    (b:   Bool): Bool =  a == b
-    def implies(b: ⇒ Bool): Bool = !a || b
+    def iff    (b:   Bool): Bool   =  a == b
+    def implies(b: ⇒ Bool): Bool   = !a || b
   }
 
   /**
@@ -71,12 +71,12 @@ package object wolery
   implicit final
   class PartialOrderingSyntax[α](a: α)(implicit ε: PartialOrdering[α])
   {
-    def <        (b: α)       : Bool = ε.lt(a,b)
-    def <=       (b: α)       : Bool = ε.lteq(a,b)
-    def >        (b: α)       : Bool = ε.gt(a,b)
-    def >=       (b: α)       : Bool = ε.gteq(a,b)
-    def ≡        (b: α)       : Bool = ε.equiv(a,b)
-    def equiv    (b: α)       : Bool = ε.equiv(a,b)
+    def <    (b: α): Bool          = ε.lt(a,b)
+    def <=   (b: α): Bool          = ε.lteq(a,b)
+    def >    (b: α): Bool          = ε.gt(a,b)
+    def >=   (b: α): Bool          = ε.gteq(a,b)
+    def ≡    (b: α): Bool          = ε.equiv(a,b)
+    def equiv(b: α): Bool          = ε.equiv(a,b)
   }
 
   /**
@@ -91,10 +91,10 @@ package object wolery
   implicit final
   class OrderingSyntax[α](a: α)(implicit ε: Ordering[α])
   {
-    def max      (b: α)       : α    = ε.max(a,b)
-    def min      (b: α)       : α    = ε.min(a,b)
-    def clamp    (l: α,h: α)  : α    = util.utilities.clamp    (a,l,h)
-    def isBetween(l: α,h: α)  : Bool = util.utilities.isBetween(a,l,h)
+    def max      (b: α)     : α    = ε.max(a,b)
+    def min      (b: α)     : α    = ε.min(a,b)
+    def clamp    (l: α,h: α): α    = util.utilities.clamp    (a,l,h)
+    def isBetween(l: α,h: α): Bool = util.utilities.isBetween(a,l,h)
   }
 
   /**
@@ -121,20 +121,20 @@ package object wolery
   implicit final
   class SeqSyntax[α](val s: Seq[α]) extends AnyVal
   {
-    def \ (t: Seq[α]): Seq[α]  =  s.diff(t)
-    def ∪ (t: Seq[α]): Seq[α]  =  s.union(t)
-    def ∩ (t: Seq[α]): Seq[α]  =  s.intersect(t)
-    def ⊖ (t: Seq[α]): Seq[α]  =  s.union(t) diff s.intersect(t)
-    def ⊂ (t: Seq[α]): Bool    =  s.containsSlice(t) && !t.containsSlice(s)
-    def ⊃ (t: Seq[α]): Bool    =  t.containsSlice(s) && !s.containsSlice(t)
-    def ⊄ (t: Seq[α]): Bool    = !s.containsSlice(t) ||  t.containsSlice(s)
-    def ⊅ (t: Seq[α]): Bool    = !t.containsSlice(s) ||  s.containsSlice(t)
-    def ⊆ (t: Seq[α]): Bool    =  s.containsSlice(t)
-    def ⊇ (t: Seq[α]): Bool    =  t.containsSlice(s)
-    def ⊈ (t: Seq[α]): Bool    = !s.containsSlice(t)
-    def ⊉ (t: Seq[α]): Bool    = !t.containsSlice(s)
-    def ∋ (e: α)     : Bool    =  s.contains(e)
-    def ∌ (e: α)     : Bool    = !s.contains(e)
+    def \ (t: Seq[α]): Seq[α]      =  s.diff(t)
+    def ∪ (t: Seq[α]): Seq[α]      =  s.union(t)
+    def ∩ (t: Seq[α]): Seq[α]      =  s.intersect(t)
+    def ⊖ (t: Seq[α]): Seq[α]      =  s.union(t) diff s.intersect(t)
+    def ⊂ (t: Seq[α]): Bool        =  s.containsSlice(t) && !t.containsSlice(s)
+    def ⊃ (t: Seq[α]): Bool        =  t.containsSlice(s) && !s.containsSlice(t)
+    def ⊄ (t: Seq[α]): Bool        = !s.containsSlice(t) ||  t.containsSlice(s)
+    def ⊅ (t: Seq[α]): Bool        = !t.containsSlice(s) ||  s.containsSlice(t)
+    def ⊆ (t: Seq[α]): Bool        =  s.containsSlice(t)
+    def ⊇ (t: Seq[α]): Bool        =  t.containsSlice(s)
+    def ⊈ (t: Seq[α]): Bool        = !s.containsSlice(t)
+    def ⊉ (t: Seq[α]): Bool        = !t.containsSlice(s)
+    def ∋ (e: α)     : Bool        =  s.contains(e)
+    def ∌ (e: α)     : Bool        = !s.contains(e)
   }
 
   /**
@@ -162,20 +162,20 @@ package object wolery
   implicit final
   class SetSyntax[α](val s: Set[α]) extends AnyVal
   {
-    def \ (t: Set[α]): Set[α]  =  s.diff(t)
-    def ∪ (t: Set[α]): Set[α]  =  s.union(t)
-    def ∩ (t: Set[α]): Set[α]  =  s.intersect(t)
-    def ⊖ (t: Set[α]): Set[α]  =  s.union(t) diff s.intersect(t)
-    def ⊂ (t: Set[α]): Bool    =  s.subsetOf(t) && !t.subsetOf(s)
-    def ⊃ (t: Set[α]): Bool    =  t.subsetOf(s) && !s.subsetOf(t)
-    def ⊄ (t: Set[α]): Bool    = !s.subsetOf(t) ||  t.subsetOf(s)
-    def ⊅ (t: Set[α]): Bool    = !t.subsetOf(s) ||  s.subsetOf(t)
-    def ⊆ (t: Set[α]): Bool    =  s.subsetOf(t)
-    def ⊇ (t: Set[α]): Bool    =  t.subsetOf(s)
-    def ⊈ (t: Set[α]): Bool    = !s.subsetOf(t)
-    def ⊉ (t: Set[α]): Bool    = !t.subsetOf(s)
-    def ∋ (e: α)     : Bool    =  s.contains(e)
-    def ∌ (e: α)     : Bool    = !s.contains(e)
+    def \ (t: Set[α]): Set[α]      =  s.diff(t)
+    def ∪ (t: Set[α]): Set[α]      =  s.union(t)
+    def ∩ (t: Set[α]): Set[α]      =  s.intersect(t)
+    def ⊖ (t: Set[α]): Set[α]      =  s.union(t) diff s.intersect(t)
+    def ⊂ (t: Set[α]): Bool        =  s.subsetOf(t) && !t.subsetOf(s)
+    def ⊃ (t: Set[α]): Bool        =  t.subsetOf(s) && !s.subsetOf(t)
+    def ⊄ (t: Set[α]): Bool        = !s.subsetOf(t) ||  t.subsetOf(s)
+    def ⊅ (t: Set[α]): Bool        = !t.subsetOf(s) ||  s.subsetOf(t)
+    def ⊆ (t: Set[α]): Bool        =  s.subsetOf(t)
+    def ⊇ (t: Set[α]): Bool        =  t.subsetOf(s)
+    def ⊈ (t: Set[α]): Bool        = !s.subsetOf(t)
+    def ⊉ (t: Set[α]): Bool        = !t.subsetOf(s)
+    def ∋ (e: α)     : Bool        =  s.contains(e)
+    def ∌ (e: α)     : Bool        = !s.contains(e)
   }
 
   /**
@@ -190,12 +190,12 @@ package object wolery
   implicit final
   class ElementSyntax[α](val e: α) extends AnyVal
   {
-    def ∈ (s: Seq[α])  : Bool =  s.contains(e)
-    def ∈ (s: Set[α])  : Bool =  s.contains(e)
-    def ∈ (s: Map[α,_]): Bool =  s.contains(e)
-    def ∉ (s: Seq[α])  : Bool = !s.contains(e)
-    def ∉ (s: Set[α])  : Bool = !s.contains(e)
-    def ∉ (s: Map[α,_]): Bool = !s.contains(e)
+    def ∈ (s: Seq[α])  : Bool      =  s.contains(e)
+    def ∈ (s: Set[α])  : Bool      =  s.contains(e)
+    def ∈ (s: Map[α,_]): Bool      =  s.contains(e)
+    def ∉ (s: Seq[α])  : Bool      = !s.contains(e)
+    def ∉ (s: Set[α])  : Bool      = !s.contains(e)
+    def ∉ (s: Map[α,_]): Bool      = !s.contains(e)
   }
 
   /**
