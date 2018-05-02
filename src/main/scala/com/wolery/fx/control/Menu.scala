@@ -32,74 +32,74 @@ object menu
    * Extends class `MenuItem` with the methods of a fluent builder API.
    */
   implicit final
-  class MenuItemBuilder(val x: MenuItem) extends AnyVal
+  class MenuItemBuilder[α <: MenuItem](val a: α) extends AnyVal
   {
-    def accelerator     (v: String)         = {x.setAccelerator(keyCombination(v));x}
-    def accelerator     (v: KeyCombination) = {x.setAccelerator(v)       ;x}
-    def disable         (v: Bool)           = {x.setDisable(v)           ;x}
-    def enable          (v: Bool)           = {x.setDisable(!v)          ;x}
-    def graphic         (v: Node)           = {x.setGraphic(v)           ;x}
-    def id              (v: String)         = {x.setId(v)                ;x}
-    def mnemonicParsing (v: Bool)           = {x.setMnemonicParsing(v)   ;x}
-    def onAction        (v: ⇒ Unit)         = {x.setOnAction(_⇒v)        ;x}
-    def onMenuValidation(v: ⇒ Unit)         = {x.setOnMenuValidation(_⇒v);x}
-    def style           (v: String)         = {x.setStyle(v)             ;x}
-    def text            (v: String)         = {x.setText(v)              ;x}
-    def datum           (v: Any)            = {x.setUserData(v)          ;x}
-    def visible         (v: Bool)           = {x.setVisible(v)           ;x}
+    def id          (v: String)         :α = {a.setId(v)                  ; a}
+    def datum       (v: Any)            :α = {a.setUserData(v)            ; a}
+    def disable     (v: Bool)           :α = {a.setDisable(v)             ; a}
+    def enable      (v: Bool)           :α = {a.setDisable(!v)            ; a}
+    def graphic     (v: Node)           :α = {a.setGraphic(v)             ; a}
+    def accelerator (v: String)         :α = {a.setAccelerator(keyCombination(v)); a}
+    def accelerator (v: KeyCombination) :α = {a.setAccelerator(v)         ; a}
+    def mnemonics   (v: Bool)           :α = {a.setMnemonicParsing(v)     ; a}
+    def onAction    (v: ⇒ Unit)         :α = {a.setOnAction(_ ⇒ v)        ; a}
+    def onValidate  (v: ⇒ Unit)         :α = {a.setOnMenuValidation(_ ⇒ v); a}
+    def style       (v: String)         :α = {a.setStyle(v)               ; a}
+    def text        (v: String)         :α = {a.setText(v)                ; a}
+    def visible     (v: Bool)           :α = {a.setVisible(v)             ; a}
   }
 
   /**
    * Extends class `CheckMenuItem` with the methods of a fluent builder API.
    */
   implicit final
-  class CheckMenuItemBuilder(val x: CheckMenuItem) extends AnyVal
+  class CheckMenuItemBuilder[α <: CheckMenuItem](val a: α) extends AnyVal
   {
-    def selected        (v: Bool)           = {x.setSelected(v);    x}
+    def selected    (v: Bool)           :α = {a.setSelected(v);      a}
   }
 
   /**
    * Extends class `RadioMenuItem` with the methods of a fluent builder API.
    */
   implicit final
-  class RadioMenuItemSyntax(val x: RadioMenuItem) extends AnyVal
+  class RadioMenuItemSyntax[α <: RadioMenuItem](val a: α) extends AnyVal
   {
-    def selected        (v: Bool)           = {x.setSelected(v);    x}
-    def toggleGroup     (v: ToggleGroup)    = {x.setToggleGroup(v); x}
+    def group       (v: ToggleGroup)    :α = {a.setToggleGroup(v);   a}
+    def selected    (v: Bool)           :α = {a.setSelected(v);      a}
   }
 
   /**
    * Extends class `CustomMenuItem` with the methods of a fluent builder API.
    */
   implicit final
-  class CustomMenuItemBuilder(val x: CustomMenuItem) extends AnyVal
+  class CustomMenuItemBuilder[α <: CustomMenuItem](val a: α) extends AnyVal
   {
-    def content         (v: Node)           = {x.setContent(v);     x}
-    def hideOnClick     (v: Bool)           = {x.setHideOnClick(v); x}
+    def content     (v: Node)           :α = {a.setContent(v);       a}
+    def hideOnClick (v: Bool)           :α = {a.setHideOnClick(v);   a}
   }
 
   /**
    * Extends class `Menu` with the methods of a fluent builder API.
    */
   implicit final
-  class MenuBuilder(val x: Menu) extends AnyVal
+  class MenuBuilder[α <: Menu](val a: α) extends AnyVal
   {
-    def onHidden        (v: ⇒ Unit)         = {x.setOnHidden (_⇒v); x}
-    def onHiding        (v: ⇒ Unit)         = {x.setOnHiding (_⇒v); x}
-    def onShowing       (v: ⇒ Unit)         = {x.setOnShowing(_⇒v); x}
-    def onShown         (v: ⇒ Unit)         = {x.setOnShown  (_⇒v); x}
+    def onHidden    (v: ⇒ Unit)         :α = {a.setOnHidden (_ ⇒ v); a}
+    def onHiding    (v: ⇒ Unit)         :α = {a.setOnHiding (_ ⇒ v); a}
+    def onShowing   (v: ⇒ Unit)         :α = {a.setOnShowing(_ ⇒ v); a}
+    def onShown     (v: ⇒ Unit)         :α = {a.setOnShown  (_ ⇒ v); a}
   }
 
   /**
    * Extends class `ContextMenu` with the methods of a fluent builder API.
    */
   implicit final
-  class ContextMenuBuilder(val x: ContextMenu) extends AnyVal
+  class ContextMenuBuilder[α <: ContextMenu](val a: α) extends AnyVal
   {
-    def onHidden        (v: ⇒ Unit)         = {x.setOnHidden (_⇒v); x}
-    def onHiding        (v: ⇒ Unit)         = {x.setOnHiding (_⇒v); x}
-    def onShowing       (v: ⇒ Unit)         = {x.setOnShowing(_⇒v); x}
-    def onShown         (v: ⇒ Unit)         = {x.setOnShown  (_⇒v); x}
+    def onHidden    (v: ⇒ Unit)         :α = {a.setOnHidden (_ ⇒ v); a}
+    def onHiding    (v: ⇒ Unit)         :α = {a.setOnHiding (_ ⇒ v); a}
+    def onShowing   (v: ⇒ Unit)         :α = {a.setOnShowing(_ ⇒ v); a}
+    def onShown     (v: ⇒ Unit)         :α = {a.setOnShown  (_ ⇒ v); a}
   }
 
   /**
@@ -140,9 +140,9 @@ object menu
    */
   def setApplicationMenu(menubar: MenuBar): Unit =
   {
-    import com.sun.glass.ui.{ Menu ⇒ gMenu, MenuItem ⇒ gMenuItem }
+    import com.sun.glass.ui.{Menu ⇒ gMenu,MenuItem ⇒ gMenuItem}
     import com.sun.glass.ui.Application.GetApplication
-    import com.sun.glass.ui.MenuItem.{ Callback, Separator ⇒ gSeperator }
+    import com.sun.glass.ui.MenuItem.{Callback,Separator ⇒ gSeperator}
     import com.sun.javafx.PlatformUtil.isMac
     import com.wolery.util.reflect.method
 
