@@ -171,10 +171,10 @@ class Console extends TextArea with Logging
   {
     import menu._                                        // For menu builders
 
-    val x = new MenuItem("Cut")       .accelerator("◆X").onAction{cut()}
-    val c = new MenuItem("Copy")      .accelerator("◆C").onAction{copy()}
-    val v = new MenuItem("Paste")     .accelerator("◆V").onAction{paste()}
-    val a = new MenuItem("Select All").accelerator("◆A").onAction{selectAll()}
+    val x = new MenuItem("Cut")       .accelerator("◆X").onAction(cut())
+    val c = new MenuItem("Copy")      .accelerator("◆C").onAction(copy())
+    val v = new MenuItem("Paste")     .accelerator("◆V").onAction(paste())
+    val a = new MenuItem("Select All").accelerator("◆A").onAction(selectAll())
 
     new ContextMenu(x,c,v,a).onShowing
     {
