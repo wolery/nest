@@ -15,6 +15,8 @@
 package com.wolery
 package util
 
+//****************************************************************************
+
 /**
  * Miscellaneous utility functions used throughout the Wolery.
  *

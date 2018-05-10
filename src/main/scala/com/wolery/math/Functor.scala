@@ -15,6 +15,8 @@
 package com.wolery
 package math
 
+//****************************************************************************
+
 /**
  * Describes the operations that allow the type constructor `F[_]` to act as a
  * (covariant endo-) functor on the category `Scala`.

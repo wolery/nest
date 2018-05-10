@@ -15,7 +15,11 @@
 package com.wolery
 package util
 
+//****************************************************************************
+
 import java.lang.invoke.{MethodHandle,MethodHandles}
+
+//****************************************************************************
 
 /**
  * Miscellaneous utility functions for working with reflection.

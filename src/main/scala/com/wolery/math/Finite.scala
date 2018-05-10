@@ -15,6 +15,8 @@
 package com.wolery
 package math
 
+//****************************************************************************
+
 /**
  * Describes a type that is inhabited by a finite set of values.
  *

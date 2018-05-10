@@ -25,6 +25,8 @@
 package com.wolery
 package math
 
+//****************************************************************************
+
 /**
  * Describes the operations that endow the data type `S` with the structure of
  * a semigroup.

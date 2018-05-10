@@ -15,9 +15,13 @@
 package com.wolery
 package test
 
+//****************************************************************************
+
 import org.scalactic.{Prettifier,source}
 import org.scalatest.{Assertion,FunSuite}
 import org.scalatest.prop.PropertyChecks
+
+//****************************************************************************
 
 /**
  * A common trait for implementing unit tests.

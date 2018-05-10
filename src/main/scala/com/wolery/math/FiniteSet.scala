@@ -15,12 +15,16 @@
 package com.wolery
 package math
 
+//****************************************************************************
+
 import scala.collection.{BitSet,GenSet,SetLike}
 import scala.collection.generic.{CanBuildFrom}
 import scala.collection.mutable.{Builder,BitSet ⇒ mBitSet}
 import scala.collection.immutable.{      BitSet ⇒ iBitSet}
 
 import FiniteSet._
+
+//****************************************************************************
 
 /**
  * A specialized implementation of `Set[α]` for finite types `α`.

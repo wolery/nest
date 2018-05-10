@@ -15,7 +15,11 @@
 package com.wolery
 package util
 
+//****************************************************************************
+
 import org.slf4j.{Logger,LoggerFactory}
+
+//****************************************************************************
 
 /**
  * Initializes a dedicated logger for extenders of this trait to write to.

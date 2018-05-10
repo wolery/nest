@@ -15,7 +15,11 @@
 package com.wolery
 package util
 
+//****************************************************************************
+
 import java.util.prefs.{Preferences ⇒ JavaPreferences}
+
+//****************************************************************************
 
 /**
  * Represents a single named, mutable, persistent, value - a ''preference'' -

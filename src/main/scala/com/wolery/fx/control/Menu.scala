@@ -16,10 +16,14 @@ package com.wolery
 package fx
 package control
 
+//****************************************************************************
+
 import javafx.event.ActionEvent
 import javafx.scene.Node
 import javafx.scene.control._
 import javafx.scene.input.KeyCombination
+
+//****************************************************************************
 
 /**
  * Miscellaneous utility functions for manipulating menus.

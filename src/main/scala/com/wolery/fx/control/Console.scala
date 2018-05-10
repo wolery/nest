@@ -19,6 +19,8 @@ package com.wolery
 package fx
 package control
 
+//****************************************************************************
+
 import java.io.Writer
 import java.lang.System.{lineSeparator ⇒ EOL}
 
@@ -32,6 +34,8 @@ import scala.collection.mutable.Buffer
 
 import com.wolery.util.Logging
 import com.wolery.util.utilities.{beep,clamp,isIncreasing}
+
+//****************************************************************************
 
 /**
  * A command line console control implemented as a JavaFX TextArea control.

@@ -14,6 +14,8 @@
 
 package com
 
+//****************************************************************************
+
 /**
  * Common definitions used throughout the Wolery.
  *

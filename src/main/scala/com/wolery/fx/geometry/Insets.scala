@@ -16,7 +16,11 @@ package com.wolery
 package fx
 package geometry
 
+//****************************************************************************
+
 import javafx.geometry.{Insets ⇒ jInsets}
+
+//****************************************************************************
 
 /**
  * A companion object for class `Insets`.
