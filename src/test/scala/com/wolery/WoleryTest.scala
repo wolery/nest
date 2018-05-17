@@ -4,7 +4,7 @@
 //*  Version : $Header:$
 //*
 //*
-//*  Purpose : Unit tests for the wolery package object.
+//*  Purpose : Unit tests for the Wolery package object.
 //*
 //*
 //*  Comments: This file uses a tab size of 2 spaces.
