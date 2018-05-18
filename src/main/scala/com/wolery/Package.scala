@@ -65,6 +65,7 @@ package object wolery
    * Extends the elements of a partially ordered type with additional methods.
    *
    * @tparam α  An instance of the `PartialOrdering` type class.
+   *
    * @param  a  An element of the partially ordered type `α`.
    * @param  b  An element of the partially ordered type `α`.
    */
