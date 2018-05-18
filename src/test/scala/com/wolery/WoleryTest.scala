@@ -20,15 +20,15 @@ class WoleryTest extends test.Suite
 {
   test("BoolSyntax")
   {
-    assert(true  iff true,            "[iff 1]")
-    reject(true  iff false,           "[iff 2]")
-    reject(false iff true,            "[iff 3]")
-    assert(false iff false,           "[iff 4]")
+    assert(true  iff true,            "[⊤ ⇔ ⊤]")
+    reject(true  iff false,           "[⊤ ⇔ ⊥]")
+    reject(false iff true,            "[⊥ ⇔ ⊤]")
+    assert(false iff false,           "[⊥ ⇔ ⊥]")
 
-    assert(true  implies true,        "[implies 1]")
-    reject(true  implies false,       "[implies 2]")
-    assert(false implies true,        "[implies 3]")
-    assert(false implies false,       "[implies 4]")
+    assert(true  implies true,        "[⊤ ⇒ ⊤]")
+    reject(true  implies false,       "[⊤ ⇒ ⊥]")
+    assert(false implies true,        "[⊥ ⇒ ⊤]")
+    assert(false implies false,       "[⊥ ⇒ ⊥]")
   }
 
   test("OrderingSyntax")
