@@ -107,8 +107,8 @@ package object wolery
    *  - `∪`  set union
    *  - `∩`  set intersection
    *  - `⊖`  symmetric difference
-   *  - `⊂`  set inclusion (proper)
-   *  - `⊆`  set inclusion
+   *  - `⊂`  set inclusion (strict)
+   *  - `⊆`  set inclusion (non-strict)
    *  - `∈`  set membership
    *
    * @tparam α  The type of an element.
@@ -148,8 +148,8 @@ package object wolery
    *  - `∪`  set union
    *  - `∩`  set intersection
    *  - `⊖`  symmetric difference
-   *  - `⊂`  set inclusion (proper)
-   *  - `⊆`  set inclusion
+   *  - `⊂`  set inclusion (strict)
+   *  - `⊆`  set inclusion (non-strict)
    *  - `∈`  set membership
    *  - `∅`  the empty set
    *
