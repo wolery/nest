@@ -20,10 +20,10 @@ class WoleryTest extends test.Suite
 {
   test("BoolSyntax")
   {
-    assert(true  iff true,            "[⊤ ⇔ ⊤]")
-    reject(true  iff false,           "[⊤ ⇔ ⊥]")
-    reject(false iff true,            "[⊥ ⇔ ⊤]")
-    assert(false iff false,           "[⊥ ⇔ ⊥]")
+    assert(true    iff   true,        "[⊤ ⇔ ⊤]")
+    reject(true    iff   false,       "[⊤ ⇔ ⊥]")
+    reject(false   iff   true,        "[⊥ ⇔ ⊤]")
+    assert(false   iff   false,       "[⊥ ⇔ ⊥]")
 
     assert(true  implies true,        "[⊤ ⇒ ⊤]")
     reject(true  implies false,       "[⊤ ⇒ ⊥]")
@@ -33,20 +33,37 @@ class WoleryTest extends test.Suite
 
   test("OrderingSyntax")
   {
-    assert(0  .max(1)   == 1,         "[max 1]")
-    assert(0.0.max(1.0) == 1.0,       "[max 2]")
-    assert('a'.max('b') == 'b',       "[max 3]")
+    assert(0  .max(1)     == 1,       "[max 1]")
+    assert(0.0.max(1)     == 1.0,     "[max 2]")
+    assert('a'.max('b')   == 'b',     "[max 3]")
 
-    assert(0  .min(1)   == 0,         "[min 1]")
-    assert(0.0.min(1.0) == 0.0,       "[min 2]")
-    assert('a'.min('b') == 'a',       "[min 3]")
+    assert(0  .min(1)     == 0,       "[min 1]")
+    assert(0.0.min(1)     == 0.0,     "[min 2]")
+    assert('a'.min('b')   == 'a',     "[min 3]")
 
-    assert(0.isBetween(0,1),          "[isBetween 1]")
-    assert(1.isBetween(0,1),          "[isBetween 2]")
-    reject(2.isBetween(0,1),          "[isBetween 3]")
-    assert(0.0.isBetween(0.0,1.0),    "[isBetween 4]")
-    assert(1.0.isBetween(0.0,1.0),    "[isBetween 5]")
-    reject(2.0.isBetween(0.0,1.0),    "[isBetween 6]")
+    assert(-1 .clamp(0,1) == 0,       "[clamp 1]")
+    assert(0  .clamp(0,1) == 0,       "[clamp 2]")
+    assert(1  .clamp(0,1) == 1,       "[clamp 3]")
+    assert(2  .clamp(0,1) == 1,       "[clamp 4]")
+    assert(0.0.clamp(0,1) == 0.0,     "[clamp 5]")
+    assert(0.5.clamp(0,1) == 0.5,     "[clamp 6]")
+    assert(1.0.clamp(0,1) == 1.0,     "[clamp 7]")
+    assert(2.0.clamp(0,1) == 1.0,     "[clamp 8]")
+
+    reject(-1 .isBetween(0,1),        "[isBetween 1]")
+    assert(0  .isBetween(0,1),        "[isBetween 2]")
+    assert(1  .isBetween(0,1),        "[isBetween 3]")
+    reject(2  .isBetween(0,1),        "[isBetween 4]")
+    assert(0.0.isBetween(0,1),        "[isBetween 5]")
+    assert(0.5.isBetween(0,1),        "[isBetween 6]")
+    assert(1.0.isBetween(0,1),        "[isBetween 7]")
+    reject(2.0.isBetween(0,1),        "[isBetween 8]")
+
+    forAll("x","l","h") {(x: ℝ,l: ℝ,h: ℝ) ⇒
+      whenever(l <= h)
+    {
+      assert(x.clamp(l,h).isBetween(l,h))
+    }}
   }
 
   test("SeqSyntax")

@@ -33,7 +33,7 @@ import scala.beans.BeanProperty
 import scala.collection.mutable.Buffer
 
 import com.wolery.util.Logging
-import com.wolery.util.utilities.{beep,clamp,isIncreasing}
+import com.wolery.util.utilities.{beep,isIncreasing}
 
 //****************************************************************************
 
@@ -228,7 +228,7 @@ class Console extends TextArea with Logging
     {
       log.warn(s"Bad history size $size: should be $min<=size<=$max")
 
-      setHistorySize(clamp(min,size,max))                // ...clamp and retry
+      setHistorySize(size.clamp(min,max))                // ...clamp and retry
     }
     else
     if (δ > 0)                                           // Size is growing?
@@ -396,8 +396,8 @@ class Console extends TextArea with Logging
     log.trace("selectRange({},{})",anchor,caret)         // Trace our location
 
     val n = getLength                                    // End of input area
-    val a = clamp(m_input,anchor,n)                      // Clamp the anchor
-    val c = clamp(m_input,caret, n)                      // Clamp the caret
+    val a = anchor.clamp(m_input,n)                      // Clamp the anchor
+    val c = caret .clamp(m_input,n)                      // Clamp the caret
 
     super.selectRange(a,c)                               // Now select region
 

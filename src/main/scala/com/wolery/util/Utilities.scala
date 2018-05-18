@@ -112,47 +112,51 @@ trait utilities
   def superscript(s: String): String = s.map(superscript)
 
   /**
-   * Clamp the given value to lie within the closed interval `[lo, hi]`.
+   * Clamp the given value to lie within the closed interval `[l, h]`.
    *
    * By 'closed' we mean that the interval includes its own bounds.
    *
-   * @param  lo  The lower bound of the range to which `v` is clamped.
-   * @param  v   The value to be clamped.
-   * @param  hi  The upper bound of the range to which `v` is clamped.
+   * @tparam α  An instance of the `Ordering` type class.
    *
-   * @return The value `v`, clamped to lie within the closed interval `[lo, hi]`.
+   * @param  v  A value of type `α`.
+   * @param  l  The lower bound of the range to which `v` is to be clamped.
+   * @param  h  The upper bound of the range to which `v` is to be clamped.
+   *
+   * @return The value `v`, clamped to lie within the closed interval `[l, h]`.
    */
   final
-  def clamp[α: Ordering](lo: α,v: α,hi: α): α =
+  def clamp[α: Ordering](v: α,l: α,h: α): α =
   {
-    assert(lo <= hi);                                    // Validate arguments
+    assert(l <= h);                                      // Validate arguments
 
-    if (v < lo)                                          // Less than 'lo'?
-      lo                                                 // ...clamp to 'lo'
+    if (v < l)                                           // Is v less than l?
+      l                                                  // ...clamp it to l
     else
-    if (v > hi)                                          // Greater than 'hi'?
-      hi                                                 // ...clamp to 'hi'
-    else                                                 // Within interval
-      v                                                  // ...nothing to do
+    if (v > h)                                           // Is greater than h?
+      h                                                  // ...clamp it to h
+    else                                                 // Lies within [l,h]?
+      v                                                  // ...leave it alone
   }
 
   /**
-   * Returns true if the value `v` lies within the closed interval `[lo, hi]`.
+   * Returns true if the value `v` lies within the closed interval `[l, h]`.
    *
    * By 'closed' we mean that the interval includes its own bounds.
    *
-   * @param  v   The value to test for inclusion in the closed interval.
-   * @param  lo  The lower bound of the closed interval.
-   * @param  hi  The upper bound of the closed interval.
+   * @tparam α  An instance of the `Ordering` type class.
    *
-   * @return `true` if `v` lies within the closed interval `[lo, hi]`.
+   * @param  v  A value of type `α`.
+   * @param  l  The lower bound of the closed interval.
+   * @param  h  The upper bound of the closed interval.
+   *
+   * @return `true` if `v` lies within the closed interval `[l, h]`.
    */
   final
-  def isBetween[α: Ordering](v: α,lo: α,hi: α): Bool =
+  def isBetween[α: Ordering](v: α,l: α,h: α): Bool =
   {
-    assert(lo <= hi)                                     // Validate arguments
+    assert(l <= h)                                       // Validate arguments
 
-    lo<=v && v<=hi                                       // Test for inclusion
+    l<=v && v<=h                                         // Test for inclusion
   }
 
   /**
