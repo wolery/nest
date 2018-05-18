@@ -35,8 +35,8 @@ object menu
   /**
    * Extends class `MenuItem` with the methods of a fluent builder API.
    */
-  implicit final
-  class MenuItemBuilder[α <: MenuItem](val a: α) extends AnyVal
+  implicit
+  class MenuItemBuilder[α <: MenuItem](private val a: α) extends AnyVal
   {
     def id          (v: String)         :α = {a.setId(v)                  ; a}
     def datum       (v: Any)            :α = {a.setUserData(v)            ; a}
@@ -56,8 +56,8 @@ object menu
   /**
    * Extends class `CheckMenuItem` with the methods of a fluent builder API.
    */
-  implicit final
-  class CheckMenuItemBuilder[α <: CheckMenuItem](val a: α) extends AnyVal
+  implicit
+  class CheckMenuItemBuilder[α <: CheckMenuItem](private val a: α) extends AnyVal
   {
     def selected    (v: Bool)           :α = {a.setSelected(v);      a}
   }
@@ -65,8 +65,8 @@ object menu
   /**
    * Extends class `RadioMenuItem` with the methods of a fluent builder API.
    */
-  implicit final
-  class RadioMenuItemSyntax[α <: RadioMenuItem](val a: α) extends AnyVal
+  implicit
+  class RadioMenuItemSyntax[α <: RadioMenuItem](private val a: α) extends AnyVal
   {
     def group       (v: ToggleGroup)    :α = {a.setToggleGroup(v);   a}
     def selected    (v: Bool)           :α = {a.setSelected(v);      a}
@@ -75,8 +75,8 @@ object menu
   /**
    * Extends class `CustomMenuItem` with the methods of a fluent builder API.
    */
-  implicit final
-  class CustomMenuItemBuilder[α <: CustomMenuItem](val a: α) extends AnyVal
+  implicit
+  class CustomMenuItemBuilder[α <: CustomMenuItem](private val a: α) extends AnyVal
   {
     def content     (v: Node)           :α = {a.setContent(v);       a}
     def hideOnClick (v: Bool)           :α = {a.setHideOnClick(v);   a}
@@ -85,8 +85,8 @@ object menu
   /**
    * Extends class `Menu` with the methods of a fluent builder API.
    */
-  implicit final
-  class MenuBuilder[α <: Menu](val a: α) extends AnyVal
+  implicit
+  class MenuBuilder[α <: Menu](private val a: α) extends AnyVal
   {
     def onHidden    (v: ⇒ Unit)         :α = {a.setOnHidden (_ ⇒ v); a}
     def onHiding    (v: ⇒ Unit)         :α = {a.setOnHiding (_ ⇒ v); a}
@@ -97,8 +97,8 @@ object menu
   /**
    * Extends class `ContextMenu` with the methods of a fluent builder API.
    */
-  implicit final
-  class ContextMenuBuilder[α <: ContextMenu](val a: α) extends AnyVal
+  implicit
+  class ContextMenuBuilder[α <: ContextMenu](private val a: α) extends AnyVal
   {
     def onHidden    (v: ⇒ Unit)         :α = {a.setOnHidden (_ ⇒ v); a}
     def onHiding    (v: ⇒ Unit)         :α = {a.setOnHiding (_ ⇒ v); a}
