@@ -27,6 +27,7 @@ package object math
    * Extends the elements of a semigroup with additional methods.
    *
    * @tparam S  An instance of the `Semigroup` type class.
+   *
    * @param  s  An element of the semigroup `S`.
    * @param  t  An element of the semigroup `S`.
    */
@@ -41,6 +42,7 @@ package object math
    * Extends the elements of a group with additional methods.
    *
    * @tparam G  An instance of the `Group` type class.
+   *
    * @param  g  An element of the group `G`.
    */
   implicit
@@ -56,6 +58,7 @@ package object math
    *
    * @tparam S  A set acted upon by the group `G`.
    * @tparam G  A group acting upon the set `S`.
+   *
    * @param  s  An element of the carrier set `S`.
    * @param  t  An element of the acting group `G`.
    */
@@ -73,6 +76,7 @@ package object math
    *
    * @tparam S  A set acted upon sharply transitively by the group `G`.
    * @tparam G  A group acting sharply transitively upon the set `S`.
+   *
    * @param  s  An element of the carrier set `S`.
    * @param  t  An element of the acting group `G`.
    */
@@ -87,6 +91,7 @@ package object math
    * Extends the values of a finite type with additional methods.
    *
    * @tparam α  A type inhabited by a finite set of values.
+   *
    * @param  a  A value of the finite type `α`.
    */
   implicit

@@ -235,7 +235,7 @@ class Preferences private (private val m_imp: JavaPreferences)
   def sync(): Unit = m_imp.sync()
 
   /**
-   * Describes the type of a factory method that constructs a `Preference [α]`
+   * Describes the type of a factory method that constructs a `Preference[α]`
    * from the name and default value of the preference.
    *
    * @tparam α  The type of value being managed by the generated preference.
@@ -243,10 +243,11 @@ class Preferences private (private val m_imp: JavaPreferences)
   type Atomic[α] = (Name,α) ⇒ Preference[α]
 
   /**
-   * Describes the type of a factory method that constructs a `Preference [Seq[α]]`
+   * Describes the type of a factory method that constructs a `Preference[Seq[α]]`
    * from the name and default value of the preference.
-   * @tparam α  The element type of the sequence being managed by the generated
-   *             preference.
+   *
+   * @tparam α  The type of sequence element being managed by the generated
+   *            preference.
    */
   type Sequence[α] = (Name,Seq[α]) ⇒ Preference[Seq[α]]
 
@@ -382,6 +383,7 @@ class Preferences private (private val m_imp: JavaPreferences)
    * function for values of type `α`.
    *
    * @tparam α        The type of value being managed by the preference.
+   *
    * @param  parse    Parses the preference value from a string.
    * @param  print    Formats the preference value as a string.
    * @param  key      The name of the preference.

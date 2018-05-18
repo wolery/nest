@@ -83,6 +83,7 @@ package object wolery
    * Extends the elements of an ordered type with additional methods.
    *
    * @tparam α  An instance of the `Ordering` type class.
+   *
    * @param  a  An element of the ordered type `α`.
    * @param  b  An element of the ordered type `α`.
    */
@@ -110,6 +111,7 @@ package object wolery
    *  - `∈`  set membership
    *
    * @tparam α  The type of an element.
+   *
    * @param  s  A sequence of elements of type `α`.
    * @param  t  A sequence of elements of type `α`.
    * @param  e  A (candidate) set element of type `α`.
@@ -151,6 +153,7 @@ package object wolery
    *  - `∅`  the empty set
    *
    * @tparam α  The type of an element.
+   *
    * @param  s  A set of elements of type `α`.
    * @param  t  A set of elements of type `α`.
    * @param  e  A (candidate) set element of type `α`.
@@ -180,6 +183,7 @@ package object wolery
    * Extends the element type `α` with additional methods.
    *
    * @tparam α  The type of an element.
+   *
    * @param  s  A collection of elements of type `α`.
    * @param  e  A (candidate) set element of type `α`.
    *

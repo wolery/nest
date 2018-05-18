@@ -232,6 +232,7 @@ abstract class Action[S,G](implicit val group: Group[G])
    *  an action of `G` upon `F[S]`.
    *
    * @tparam F  A functor.
+   *
    * @param  φ  Evidence of the fact that `F` is a functor.
    *
    * @return Evidence of the fact that the action `+` extends naturally to an
