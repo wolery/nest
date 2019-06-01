@@ -169,7 +169,11 @@ object menu
      * classes - I've no idea why - making the translation of key combinations
      * to accelerator modifiers harder than it should be.
      */
-    if (isMac && !menubar.getMenus.isEmpty)              // Something to do?
+    
+    // TODO: No longer works under JavaFX 12 / OPen JDK 12 because private API
+    //       no longer visible.
+    
+    if (false && !menubar.getMenus.isEmpty)              // Something to do?
     {
       /**
        * Returns the Apple menu as a 'Glass' menu.
