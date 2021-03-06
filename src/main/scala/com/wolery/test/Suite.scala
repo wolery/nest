@@ -17,9 +17,10 @@ package test
 
 //****************************************************************************
 
-import org.scalactic.{Prettifier,source}
-import org.scalatest.{Assertion,FunSuite}
-import org.scalatest.prop.PropertyChecks
+import org.scalactic.{Prettifier, source}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 //****************************************************************************
 
@@ -28,7 +29,7 @@ import org.scalatest.prop.PropertyChecks
  *
  * @author Jonathon Bell
  */
-trait Suite extends FunSuite with PropertyChecks
+trait Suite extends AnyFunSuite with ScalaCheckPropertyChecks
 {
   /**
    * Asserts that the given value is false, and throws an exception if not.
