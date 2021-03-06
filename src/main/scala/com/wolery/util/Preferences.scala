@@ -19,6 +19,8 @@ package util
 
 import java.util.prefs.{Preferences ⇒ JavaPreferences}
 
+import scala.reflect.ClassTag
+
 //****************************************************************************
 
 /**
@@ -421,7 +423,7 @@ class Preferences private (private val m_imp: JavaPreferences)
    *         default value pair of type `(Name,Seq[α])`.
    */
   private
-  def sequence[α](parse: String ⇒ α): Sequence[α] =
+  def sequence[α: ClassTag](parse: String ⇒ α): Sequence[α] =
   {
     atomic(_.split("◇").map(parse),_.mkString("◇"))      // The factory method
   }

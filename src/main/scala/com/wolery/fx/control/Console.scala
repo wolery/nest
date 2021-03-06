@@ -878,6 +878,7 @@ class Console extends TextArea with Logging
       m_pattern+= chars                                  // Update the pattern
 
       m_matches = m_command.filter(_.contains(m_pattern))// Filter the history
+                           .toSeq                        // ...as a sequence
 
       if (m_matches.nonEmpty)                            // Matching commands?
       {

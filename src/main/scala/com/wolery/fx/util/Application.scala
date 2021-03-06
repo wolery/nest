@@ -201,7 +201,7 @@ trait Application extends Logging
    */
   def rawParameters: Seq[String] =
   {
-    app.getParameters.getRaw.asScala                     // Delegate to JavaFX
+    app.getParameters.getRaw.asScala.toSeq               // Delegate to JavaFX
   }
 
   /**
@@ -223,7 +223,7 @@ trait Application extends Logging
    */
   def unnamedParameters: Seq[String] =
   {
-    app.getParameters.getUnnamed.asScala                 // Delegate to JavaFX
+    app.getParameters.getUnnamed.asScala.toSeq           // Delegate to JavaFX
   }
 
   /**
